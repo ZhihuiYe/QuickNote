@@ -14,6 +14,9 @@ import org.w3c.dom.Element;
 
 public class XMLWriter
 {
+
+        private static Document doc;
+        
         public XMLWriter()
         {
         }//XMLWriter
@@ -56,7 +59,7 @@ public class XMLWriter
                     // root element-------------------------------------------------
                     rootElement = doc.createElement("category");
                     Attr rootId     = doc.createAttribute("id");
-                    rootId.setValue(givenNote.givenCategory);
+                    rootId.setValue(givenCategory);
                     Attr lastUpdate = doc.createAttribute("lastUpdate");
                     lastUpdate.setValue(givenNote.getCreateTime());
                     
@@ -72,17 +75,21 @@ public class XMLWriter
                 rootElement.appendChild(newNote);
                 doc.appendChild(rootElement);
                 
-                generateXMLFile(category);
+                generateXMLFile(givenCategory);
+                
+                return true;
           }//try
           catch (ParserConfigurationException pce)
           {
                 pce.printStackTrace();
+                return false;
           }//catch
           catch (TransformerException tfe)
           {
                 tfe.printStackTrace();
+                return false;
           }//catch
-        }//main
+        }//write
         
         
         // write the content into xml file

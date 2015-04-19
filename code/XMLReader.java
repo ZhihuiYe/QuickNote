@@ -16,27 +16,45 @@ public class XMLReader
      * @param
      * @return
      **/
-    public Element read(String fileName)
+    public ReaderReturnObject read(String fileName)
     {
         try
         {
-            File fXmlFile = new File(fileName + ".xml");
+            ReaderReturnObject returnObject = new ReaderReturnElement();
+            
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(fXmlFile);
+            
+            //Trying to set the create a document object
+            try
+            {
+                //try to build a Document object from the selected file
+                File fXmlFile = new File(fileName + ".xml");
+                returnObject.setReaderDoc(dBuilder.parse(fXmlFile));
+            }//try
+            catch (Exception e)
+            {
+                //if it failed to build a Document object form the selected file
+                //(the file does not exist) then build a empty one
+                returnObject.setReaderDoc(docBuilder.newDocument());
+                returnObject.setDocElement(doc.createElement("category"));
+                return returnObject;
+            }//catch
 
+            //-If successfully created the document object by the givenFileName-
             //normalize the document to aviod unexpected format of element content
             doc.getDocumentElement().normalize();
 
-            //Return the docElement
             Node docElement = doc.getDocumentElement();
             if (docElement.getNodeType() == Node.ELEMENT_NODE)
-                return (Element)docElement;
+                returnObject.setDocElement((Element)docElement);
             else
             {
                 System.out.println("docElement is null");
-                return null;
+                returnObject.setDocElement(doc.createElement("category"));
             }//else
+            
+            return returnObject;
         }//try
         catch (Exception e)
         {
@@ -118,9 +136,10 @@ public class XMLReader
 
     private void printNote(Element givenNote)
     {
-        System.out.println("CurrentElement: " + givenNote.getNodeName());
-        System.out.println("Title: " + givenNote.getElementsByTagName("title").item(0).getTextContent());
-        System.out.println("Create Time: " + givenNote.getElementsByTagName("createTime").item(0).getTextContent());
-        System.out.println("Content: " + givenNote.getElementsByTagName("content").item(0).getTextContent());
+        System.out.println("CurrentElement: " + givenNote.getNodeName() + "\n"
+                         + "Create Time:    " + givenNote.getAttribute("createTime") + "\n"
+                         + "Title:          " + givenNote.getElementsByTagName("title").item(0).getTextContent() + "\n"
+                         + "Content:        " + givenNote.getElementsByTagName("content").item(0).getTextContent());
+        System.out.println("\n\n");
     }//printNote
 }//class
