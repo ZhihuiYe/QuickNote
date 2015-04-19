@@ -1,0 +1,10 @@
+<index lastUpdate="04/04/2015">
+    <file lastUpdate="04/04/2015" fileName='fileName1'>
+        <earliestNote time="04/04/2015">Note Title</earliestNote>
+        <note title='noteTile' time='03/04/2015'>
+            <keywords>keyword1</keywords>
+            <keywords>keyword2</keywords>
+            <keywords>keyword3</keywords>
+        </note>
+    </file>
+</index>

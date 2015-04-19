@@ -1,0 +1,14 @@
+<settings>
+    <TUI>
+        <keywordColour>Red</keywordColour>
+        <lineWidth>100</lineWidth>
+    </TUI>
+    <GUI>
+        <keywordColour>Red</keywordColour>
+        <windowWidth>400</windowWidth>
+        <windowHigh>300</windowHigh>
+    </GUI>
+    <!--<settingOptions>
+
+    </settingOptions>-->
+</settings>
