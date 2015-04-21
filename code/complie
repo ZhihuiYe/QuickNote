@@ -1,0 +1,7 @@
+#/bin/bash
+
+CLASSPATH=$CLASSPATH:./elementDatabOjects
+
+#javac -cp $CLASSPATH ./elementDataObjects/*.java
+#javac -cp $CLASSPATH *.java
+javac *.java

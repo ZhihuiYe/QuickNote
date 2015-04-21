@@ -4,9 +4,9 @@ public class ReaderReturnObject
 {
     //the Document object that XMLReader has used
     //It will reused by XMLWriter
-    private final Document readerDoc;
+    private Document readerDoc;
     //the file content read by XMLReader 
-    private final Element fileContentInElement;
+    private Element fileContentInElement;
     
     public ReaderReturnObject()
     {

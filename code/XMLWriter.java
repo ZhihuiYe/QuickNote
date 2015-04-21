@@ -14,82 +14,42 @@ import org.w3c.dom.Element;
 
 public class XMLWriter
 {
-
         private static Document doc;
+        private static Element rootElement;
         
-        public XMLWriter()
+        public XMLWriter(ReaderReturnObject fileContent)
         {
+            doc = fileContent.getReaderDoc();
+            rootElement =fileContent.getDocElement();
         }//XMLWriter
         
         /**
-         * If the category is already exist, then the new note will append to it
-         * else will create a new category
+         * Append the new note into a document.
+         * the document is given by the return object 'ReaderReturnObject'
+         * which is empty if it faild to read a category file
          **/
-        public Boolean write(String givenCategory, Note givenNote, Element oldCategory)
+        public Element writeFile(String fileName, ElementData givenElementDataObject)
         {
           try
           {
-                /* Initialising the document -------------------------------- */
-                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                doc = docBuilder.newDocument();
-                /* Initialising the document -------------------------------- */
-                
-                //transfer Note object to Note Element--------------------------
-                Element newNote  = doc.createElement("note");
-                
-                Attr createTime = doc.createAttribute("createTime");
-                createTime.setValue(givenNote.getCreateTime());
-                
-                Element title    = doc.createElement("title");
-                title.appendChild(doc.createTextNode(givenNote.getTitle()));
-                
-                Element content  = doc.createElement("content");
-                content.appendChild(doc.createTextNode(givenNote.getContent()));
-                
-                newNote.setAttributeNode(createTime);
-                newNote.appendChild(title);
-                newNote.appendChild(content);
-                //transfer Note object to Note Element--------------------------
+                Element dataInElement = givenElementDataObject.toElement(doc);
 
-                Element rootElement = null;
-                
-                if (oldCategory == null)
-                {
-                    // root element-------------------------------------------------
-                    rootElement = doc.createElement("category");
-                    Attr rootId     = doc.createAttribute("id");
-                    rootId.setValue(givenCategory);
-                    Attr lastUpdate = doc.createAttribute("lastUpdate");
-                    lastUpdate.setValue(givenNote.getCreateTime());
-                    
-                    rootElement.setAttributeNode(rootId);
-                    rootElement.setAttributeNode(lastUpdate);
-                    // root element-------------------------------------------------
-                }//if
-                else
-                {
-                    rootElement = oldCategory;
-                }//else
-                
-                rootElement.appendChild(newNote);
-                doc.appendChild(rootElement);
-                
-                generateXMLFile(givenCategory);
-                
-                return true;
+                rootElement.appendChild(dataInElement);
+
+                generateXMLFile(fileName);
+                return rootElement;
           }//try
           catch (ParserConfigurationException pce)
           {
                 pce.printStackTrace();
-                return false;
+                return null;
           }//catch
           catch (TransformerException tfe)
           {
                 tfe.printStackTrace();
-                return false;
+                return null;
           }//catch
-        }//write
+        }//writeCategoryFile
         
         
         // write the content into xml file
@@ -109,4 +69,10 @@ public class XMLWriter
 
                 System.out.println(fileName + " generated");
         }//generateXMLFile
+        
+        
+        
+        //Helpper methods --------------------------------------------------------------
+        
+        //Helpper methods --------------------------------------------------------------
 }//class

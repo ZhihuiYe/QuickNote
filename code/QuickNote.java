@@ -14,19 +14,26 @@ public class QuickNote
         String givenNoteTitle   = arg[1];
         String givenNoteContent = arg[2];
         
-        XMLWriter xmlwriter = new XMLWriter();
         XMLReader xmlreader = new XMLReader();
+        ReaderReturnObject oldCategoryFileContent = xmlreader.readFile(CATEGORY, givenCategory);
         
-        Element oldCategoryFile = xmlreader.read(givenCategory);
-        Note newNote = new Note(givenNoteTitle, "12/04/2015", givenNoteContent);
+        XMLWriter xmlwriter = new XMLWriter(oldCategoryFileContent);
         
-        xmlwriter.write(givenCategory, newNote, oldCategoryFile);
+        ElementPrinter elementPrinter = new ElementPrinter();
+        Note newNote;
+        Element includedNewNode;
         
-        xmlreader.printCategoryDoc(oldCategoryFile);
+        newNote = new Note(NOTE, givenNoteTitle + "1", "12/04/2015", givenNoteContent + "1");
+        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
+        elementPrinter.printCategoryDocElement(includedNewNode);
         
-//         Element index = xmlreader.read("data/");
-//         xmlreader.printIndexDoc(index);
+        newNote = new Note(NOTE, givenNoteTitle + "1", "13/05/2015", givenNoteContent + "2");
+        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
+        elementPrinter.printCategoryDocElement(includedNewNode);
         
+        newNote = new Note(NOTE, givenNoteTitle + "1", "14/06/2015", givenNoteContent + "3");
+        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
+        elementPrinter.printCategoryDocElement(includedNewNode);
     }//main
 
     

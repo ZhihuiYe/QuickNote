@@ -1,28 +1,57 @@
-public class Note
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+public class Note extends ElementData
 {
-    private String title;
-    private String createTime;
-    private String content;
+    private String titleInStr;
+    private String createTimeInStr;
+    private String contentInStr;
     
-    public Note(String givenTitle, String givenCreateTime, String givenContent)
+    public Note(DataType givenDataType
+               , String givenTitle, String givenCreateTime, String givenContent)
     {
-        title      = givenTitle;
-        createTime = givenCreateTime;
-        content    = givenContent;
+        super(givenDataType);
+        titleInStr      = givenTitle;
+        createTimeInStr = givenCreateTime;
+        contentInStr    = givenContent;
     }//Note
+    
+    @overide
+    public Element toElement(Document doc)
+    {
+        Element newNote  = doc.createElement("note");
+                    
+        Attr createTime = doc.createAttribute("createTime");
+        createTime.setValue(createTimeInStr);
+        
+        Element title    = doc.createElement("title");
+        title.appendChild(doc.createTextNode(titleInStr));
+        
+        Element content  = doc.createElement("content");
+        content.appendChild(doc.createTextNode(contentInStr));
+        
+        newNote.setAttributeNode(createTime);
+        newNote.appendChild(title);
+        newNote.appendChild(content);
+        
+        return newNote;
+    }//toElement
     
     public String getTitle()
     {
-        return title;
+        return titleInStr;
     }//getTitle
     
     public String getCreateTime()
     {
-        return createTime;
+        return createTimeInStr;
     }//getCreateTime
     
     public String getContent()
     {
-        return content;
+        return contentInStr;
     }//getContent
+    
+    
 }//class

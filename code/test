@@ -1,0 +1,5 @@
+#/bin/bash
+
+javac *.java
+java QuickNote testCategory testTitle testContent
+rm testCategory.xml
