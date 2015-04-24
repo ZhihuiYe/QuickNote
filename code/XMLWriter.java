@@ -14,86 +14,65 @@ import org.w3c.dom.Element;
 
 public class XMLWriter
 {
-
         private static Document doc;
+        private static Element rootElement;
         
-        public XMLWriter()
+        /**
+         * XMLReader and Writer have to use the same Document object
+         * @param ReaderReturnObject the object that return from XMLReader
+         **/
+        public XMLWriter(ReaderReturnObject fileContent)
         {
+            doc = fileContent.getReaderDoc();
+            rootElement =fileContent.getDocElement();
         }//XMLWriter
         
         /**
-         * If the category is already exist, then the new note will append to it
-         * else will create a new category
+         * Append the new note into a document.
+         * the document is given by the return object 'ReaderReturnObject'
+         * which is empty if it faild to read a category file
+         * @param String fileName the name of the xml file that will be producted
+         * @param ElementData A object contains the data to product a subelement
+         * of the file; e.g. Note, File etc
+         * @return Element the rootElement contains the new element
          **/
-        public Boolean write(String givenCategory, Note givenNote, Element oldCategory)
+        public Element writeFile(String fileName, ElementData givenData)
         {
           try
           {
-                /* Initialising the document -------------------------------- */
-                DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-                doc = docBuilder.newDocument();
-                /* Initialising the document -------------------------------- */
-                
-                //transfer Note object to Note Element--------------------------
-                Element newNote  = doc.createElement("note");
-                
-                Attr createTime = doc.createAttribute("createTime");
-                createTime.setValue(givenNote.getCreateTime());
-                
-                Element title    = doc.createElement("title");
-                title.appendChild(doc.createTextNode(givenNote.getTitle()));
-                
-                Element content  = doc.createElement("content");
-                content.appendChild(doc.createTextNode(givenNote.getContent()));
-                
-                newNote.setAttributeNode(createTime);
-                newNote.appendChild(title);
-                newNote.appendChild(content);
-                //transfer Note object to Note Element--------------------------
+                Element dataInElement = givenData.toElement(doc);
+                rootElement.appendChild(dataInElement);
 
-                Element rootElement = null;
-                
-                if (oldCategory == null)
-                {
-                    // root element-------------------------------------------------
-                    rootElement = doc.createElement("category");
-                    Attr rootId     = doc.createAttribute("id");
-                    rootId.setValue(givenCategory);
-                    Attr lastUpdate = doc.createAttribute("lastUpdate");
-                    lastUpdate.setValue(givenNote.getCreateTime());
-                    
-                    rootElement.setAttributeNode(rootId);
-                    rootElement.setAttributeNode(lastUpdate);
-                    // root element-------------------------------------------------
-                }//if
-                else
-                {
-                    rootElement = oldCategory;
-                }//else
-                
-                rootElement.appendChild(newNote);
-                doc.appendChild(rootElement);
-                
-                generateXMLFile(givenCategory);
-                
-                return true;
+                //update the lastUpdate of the rootElement of the file ---------
+                Attr newTime = doc.createAttribute("lastUpdate");
+                newTime.setValue(givenData.getTime());
+                rootElement.setAttributeNode(newTime);
+                //update the lastUpdate of the rootElement of the file ---------
+
+                generateXMLFile(fileName);
+                return rootElement;
           }//try
           catch (ParserConfigurationException pce)
           {
                 pce.printStackTrace();
-                return false;
+                return null;
           }//catch
           catch (TransformerException tfe)
           {
                 tfe.printStackTrace();
-                return false;
+                return null;
           }//catch
-        }//write
+        }//writeCategoryFile
         
-        
+        private static Boolean updateIndex(ElementData givenData)
+        {
+            
+            return true;
+        }//updateIndex
+
+
         // write the content into xml file
-        private static void generateXMLFile(String fileName)
+        private static Boolean generateXMLFile(String fileName)
             throws ParserConfigurationException, TransformerException
         {
 
@@ -107,6 +86,16 @@ public class XMLWriter
                 StreamResult result = new StreamResult(new File(fileName + ".xml"));
                 transformer.transform(source, result);
 
-                System.out.println(fileName + " generated");
+                System.out.println(ElementPrinter.ANSI_RED 
+                                 + "System: '" + fileName + "' generated"
+                                 + ElementPrinter.ANSI_RESET + "\n");
+                                 
+                return true;
         }//generateXMLFile
+        
+        
+        
+        //Helpper methods --------------------------------------------------------------
+        
+        //Helpper methods --------------------------------------------------------------
 }//class

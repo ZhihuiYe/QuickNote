@@ -3,143 +3,101 @@ import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+
 import org.w3c.dom.Element;
+import org.w3c.dom.Attr;
 import java.io.File;
 
 public class XMLReader
 {
+    /**
+     * Constructor reequired nothing
+     **/
     public XMLReader()
     {
     }//Constructor
 
     /**
-     * @param
-     * @return
+     * It will read a xml file, if the file does exist then it will create a 
+     * ducument object from the file and read the rootElement of the file then
+     * store them in a ReaderReturnObject. If the file does not exist then it 
+     * will generate a new empty xml document and create a new rootElement; the 
+     * element type is depent on the type of the file.
+     * @param fileType The type of file xml file; INDEX, CATEGORY, etc
+     * @param fileName the name of the xml file
+     * @return a object contains Document object for reading the xml file and 
+     * the rootElement of the xml file
      **/
-    public ReaderReturnObject read(String fileName)
+    public ReaderReturnObject readFile(ElementData.DataType fileType, String fileName)
+            throws XMLReaderException
     {
         try
         {
-            ReaderReturnObject returnObject = new ReaderReturnElement();
-            
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            DocumentBuilder docBuilder = dbFactory.newDocumentBuilder();
+            Document doc;
+            ReaderReturnObject returnObject = new ReaderReturnObject();
             
             //Trying to set the create a document object
             try
             {
                 //try to build a Document object from the selected file
                 File fXmlFile = new File(fileName + ".xml");
-                returnObject.setReaderDoc(dBuilder.parse(fXmlFile));
+                doc  = docBuilder.parse(fXmlFile);
+                
+                //normalize the document to aviod unexpected format of element content
+                doc.getDocumentElement().normalize();
+
+                Node docElement = doc.getDocumentElement();
+                if (docElement.getNodeType() == Node.ELEMENT_NODE)
+                {
+//                     //Print out the category doc that has been read
+//                     printCategoryDocElement((Element)docElement);
+                    returnObject.setDocElement((Element)docElement);
+                }
+                else
+                {
+                    System.out.println("docElement is not an Element");
+                    throw new Exception("reading a non-xml struct file");
+                }//else
+                
+                returnObject.setReaderDoc(doc);
+                return returnObject;
             }//try
             catch (Exception e)
             {
+                System.out.println(ElementPrinter.ANSI_RED + "Failed to read "
+                                    + "'" + fileName + "'"
+                                    + ElementPrinter.ANSI_RESET);
                 //if it failed to build a Document object form the selected file
                 //(the file does not exist) then build a empty one
-                returnObject.setReaderDoc(docBuilder.newDocument());
-                returnObject.setDocElement(doc.createElement("category"));
+                doc = docBuilder.newDocument();
+                returnObject.setReaderDoc(doc);
+                
+                Element rootElement = null;
+                switch (fileType)
+                {
+                    case CATEGORY:
+                              rootElement = doc.createElement("category");
+                              Attr idAttr = doc.createAttribute("id");
+                              idAttr.setValue(fileName);
+                              rootElement.setAttributeNode(idAttr);
+                              break;
+                    case FILE    : 
+                              rootElement = doc.createElement("index");
+                              break;
+                    default      :
+                              System.out.println("readFile: cannot identify the file type");
+                              break;
+                }//switch
+                doc.appendChild(rootElement);
+                returnObject.setDocElement(rootElement);
                 return returnObject;
             }//catch
-
-            //-If successfully created the document object by the givenFileName-
-            //normalize the document to aviod unexpected format of element content
-            doc.getDocumentElement().normalize();
-
-            Node docElement = doc.getDocumentElement();
-            if (docElement.getNodeType() == Node.ELEMENT_NODE)
-                returnObject.setDocElement((Element)docElement);
-            else
-            {
-                System.out.println("docElement is null");
-                returnObject.setDocElement(doc.createElement("category"));
-            }//else
-            
-            return returnObject;
         }//try
         catch (Exception e)
         {
-            e.printStackTrace();
-            return null;
+            throw new XMLReaderException("Failed to read file" + fileName, e);
         }//catch
-    }//read
-
-
-    public void printIndexDoc(Element docElement)
-    {
-        //Index tag
-        System.out.println("Root element: " + docElement.getNodeName() + "\n"
-                         + "lastUpdate:   " + docElement.getAttribute("lastUpdate") + "\n");
-        
-        //File tag
-        NodeList nList = docElement.getElementsByTagName("file");
-        for (int nIndex = 0; nIndex < nList.getLength(); nIndex++)
-        {
-            Node currentNode = nList.item(nIndex);
-            if (currentNode.getNodeType() == Node.ELEMENT_NODE)
-                printFile((Element)currentNode);
-        }//for
-    }//printIndexDoc
-    
-    public void printFile(Element givenNote)
-    {
-        //File tag
-        System.out.println("CurrentElement: " + givenNote.getNodeName()
-                         + "lastUpdate:     " + givenNote.getAttribute("lastUpdate")
-                         + "File Name:      " + givenNote.getAttribute("fileName"));
-        
-        //Earliest Note
-        Element earliestNote = (Element)givenNote.getElementsByTagName("earliestNote").item(0);
-        System.out.println("Earliest note:  " + earliestNote.getAttribute("time") + " " 
-                                              + earliestNote.getTextContent());
-        
-        //Note
-        NodeList nList = givenNote.getElementsByTagName("note");
-        for (int nIndex = 0; nIndex < nList.getLength(); nIndex++)
-        {
-            Node currentNode = nList.item(nIndex);
-            if (currentNode.getNodeType() == Node.ELEMENT_NODE)
-            {
-                //Note Attribute
-                Element currentElement = (Element)currentNode;
-                System.out.println("Title: " + currentElement.getAttribute("title") + "\n"
-                                 + "Time:  " + currentElement.getAttribute("time")  + "\n");
-
-                //Keywords
-                NodeList kwList = currentElement.getElementsByTagName("keywords");
-                for (int kwI = 0; kwI < kwList.getLength(); kwI++)
-                    System.out.println("keywords: " + kwList.item(kwI).getTextContent());
-            }//if
-        }//for
-    }//printFile
-
-    
-    /**
-     * Print out the notes element content from a document element
-     **/
-    public void printCategoryDoc(Element docElement)
-    {
-            System.out.println("Root element :" + docElement.getNodeName());
-            System.out.println("id: " + docElement.getAttribute("id"));
-            System.out.println("lastUpdate: " + docElement.getAttribute("lastUpdate") + "\n");
-
-            // Extract all the driver element from the document
-            NodeList nList = docElement.getElementsByTagName("note");
-
-            for (int nIndex = 0; nIndex < nList.getLength(); nIndex++)
-            {
-                    Node currentNode = nList.item(nIndex);
-
-                    if (currentNode.getNodeType() == Node.ELEMENT_NODE)
-                            printNote((Element)currentNode);
-            }//for
-    }//printCategoryDoc
-
-    private void printNote(Element givenNote)
-    {
-        System.out.println("CurrentElement: " + givenNote.getNodeName() + "\n"
-                         + "Create Time:    " + givenNote.getAttribute("createTime") + "\n"
-                         + "Title:          " + givenNote.getElementsByTagName("title").item(0).getTextContent() + "\n"
-                         + "Content:        " + givenNote.getElementsByTagName("content").item(0).getTextContent());
-        System.out.println("\n\n");
-    }//printNote
+    }//readFile
 }//class

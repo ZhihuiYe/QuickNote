@@ -4,22 +4,30 @@ public class ReaderReturnObject
 {
     //the Document object that XMLReader has used
     //It will reused by XMLWriter
-    private final Document readerDoc;
+    private Document readerDoc;
     //the file content read by XMLReader 
-    private final Element fileContentInElement;
+    private Element fileContentInElement;
     
     public ReaderReturnObject()
     {
         //construct does nothing
     }//construct
     
-    public void setDocElement(Element requireFileContentInElement)
+    public void setDocElement(Element requireFileContentInElement) 
+        throws ReaderReturnObjectException
     {
+        if (fileContentInElement != null)
+            throw new ReaderReturnObjectException
+                    ("ReaderReturnObject: fileContentInElement already setted");
         fileContentInElement = requireFileContentInElement;
     }//setDocElement
     
     public void setReaderDoc(Document requireReaderDoc)
+        throws ReaderReturnObjectException
     {
+        if (readerDoc != null)
+            throw new ReaderReturnObjectException
+                    ("ReaderReturnObject: readerDoc already setted");
         readerDoc = requireReaderDoc;
     }//setReaderDoc
 

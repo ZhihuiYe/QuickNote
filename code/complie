@@ -1,0 +1,9 @@
+#/bin/bash
+
+CLASSPATH=$CLASSPATH:./elementData
+CLASSPATH=$CLASSPATH:./exceptions
+
+javac -cp $CLASSPATH ./exceptions/*.java
+javac -cp $CLASSPATH ./elementData/*.java
+javac -cp $CLASSPATH *.java
+
