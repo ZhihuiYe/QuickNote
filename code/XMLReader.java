@@ -10,9 +10,19 @@ import java.io.File;
 
 public class XMLReader
 {
+<<<<<<< HEAD
     /**
      * Constructor reequired nothing
      **/
+=======
+    public enum DataType
+    {
+        CATEGORY,
+        FILE,
+        NOTE
+    }
+    
+>>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
     public XMLReader()
     {
     }//Constructor
@@ -28,8 +38,12 @@ public class XMLReader
      * @return a object contains Document object for reading the xml file and 
      * the rootElement of the xml file
      **/
+<<<<<<< HEAD
     public ReaderReturnObject readFile(ElementData.DataType fileType, String fileName)
             throws XMLReaderException
+=======
+    public ReaderReturnObject readFile(DataType fileType, String fileName)
+>>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
     {
         try
         {
@@ -66,9 +80,13 @@ public class XMLReader
             }//try
             catch (Exception e)
             {
+<<<<<<< HEAD
                 System.out.println(ElementPrinter.ANSI_RED + "Failed to read "
                                     + "'" + fileName + "'"
                                     + ElementPrinter.ANSI_RESET);
+=======
+                System.out.println("Failed to read '" + fileName + "'");
+>>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
                 //if it failed to build a Document object form the selected file
                 //(the file does not exist) then build a empty one
                 doc = docBuilder.newDocument();
@@ -77,6 +95,7 @@ public class XMLReader
                 Element rootElement = null;
                 switch (fileType)
                 {
+<<<<<<< HEAD
                     case CATEGORY:
                               rootElement = doc.createElement("category");
                               Attr idAttr = doc.createAttribute("id");
@@ -84,6 +103,12 @@ public class XMLReader
                               rootElement.setAttributeNode(idAttr);
                               break;
                     case FILE    : 
+=======
+                    case CATEGORY: 
+                              rootElement = doc.createElement("category");
+                              break;
+                    case INDEX   : 
+>>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
                               rootElement = doc.createElement("index");
                               break;
                     default      :

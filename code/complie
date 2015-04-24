@@ -1,5 +1,6 @@
 #/bin/bash
 
+<<<<<<< HEAD
 CLASSPATH=$CLASSPATH:./elementData
 CLASSPATH=$CLASSPATH:./exceptions
 
@@ -7,3 +8,10 @@ javac -cp $CLASSPATH ./exceptions/*.java
 javac -cp $CLASSPATH ./elementData/*.java
 javac -cp $CLASSPATH *.java
 
+=======
+CLASSPATH=$CLASSPATH:./elementDatabOjects
+
+#javac -cp $CLASSPATH ./elementDataObjects/*.java
+#javac -cp $CLASSPATH *.java
+javac *.java
+>>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
