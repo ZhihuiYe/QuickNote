@@ -17,13 +17,11 @@ public class XMLWriter
         private static Document doc;
         private static Element rootElement;
         
-<<<<<<< HEAD
         /**
          * XMLReader and Writer have to use the same Document object
          * @param ReaderReturnObject the object that return from XMLReader
          **/
-=======
->>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
+
         public XMLWriter(ReaderReturnObject fileContent)
         {
             doc = fileContent.getReaderDoc();
@@ -34,7 +32,6 @@ public class XMLWriter
          * Append the new note into a document.
          * the document is given by the return object 'ReaderReturnObject'
          * which is empty if it faild to read a category file
-<<<<<<< HEAD
          * @param String fileName the name of the xml file that will be producted
          * @param ElementData A object contains the data to product a subelement
          * of the file; e.g. Note, File etc
@@ -53,17 +50,6 @@ public class XMLWriter
                 rootElement.setAttributeNode(newTime);
                 //update the lastUpdate of the rootElement of the file ---------
 
-=======
-         **/
-        public Element writeFile(String fileName, ElementData givenElementDataObject)
-        {
-          try
-          {
-                Element dataInElement = givenElementDataObject.toElement(doc);
-
-                rootElement.appendChild(dataInElement);
-
->>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
                 generateXMLFile(fileName);
                 return rootElement;
           }//try
@@ -78,10 +64,6 @@ public class XMLWriter
                 return null;
           }//catch
         }//writeCategoryFile
-<<<<<<< HEAD
-=======
-        
->>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
         
         private static Boolean updateIndex(ElementData givenData)
         {
@@ -111,8 +93,6 @@ public class XMLWriter
                                  
                 return true;
         }//generateXMLFile
-        
-        
         
         //Helpper methods --------------------------------------------------------------
         

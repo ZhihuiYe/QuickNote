@@ -15,19 +15,14 @@ public class QuickNote
         String givenNoteContent = arg[2];
         
         XMLReader xmlreader = new XMLReader();
-<<<<<<< HEAD
         ReaderReturnObject oldCategoryFileContent = xmlreader.readFile(ElementData.DataType.CATEGORY, givenCategory);
-=======
-        ReaderReturnObject oldCategoryFileContent = xmlreader.readFile(CATEGORY, givenCategory);
->>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
-        
+
         XMLWriter xmlwriter = new XMLWriter(oldCategoryFileContent);
         
         ElementPrinter elementPrinter = new ElementPrinter();
         Note newNote;
         Element includedNewNode;
         
-<<<<<<< HEAD
         newNote = new Note(ElementData.DataType.NOTE, givenNoteTitle + "1", "12/04/2015", givenNoteContent + "1");
         includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
         elementPrinter.printCategory(includedNewNode);
@@ -39,19 +34,7 @@ public class QuickNote
         newNote = new Note(ElementData.DataType.NOTE, givenNoteTitle + "3", "14/06/2015", givenNoteContent + "3");
         includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
         elementPrinter.printCategory(includedNewNode);
-=======
-        newNote = new Note(NOTE, givenNoteTitle + "1", "12/04/2015", givenNoteContent + "1");
-        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
-        elementPrinter.printCategoryDocElement(includedNewNode);
-        
-        newNote = new Note(NOTE, givenNoteTitle + "1", "13/05/2015", givenNoteContent + "2");
-        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
-        elementPrinter.printCategoryDocElement(includedNewNode);
-        
-        newNote = new Note(NOTE, givenNoteTitle + "1", "14/06/2015", givenNoteContent + "3");
-        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
-        elementPrinter.printCategoryDocElement(includedNewNode);
->>>>>>> 6151e3f386415fbaee28541b9ead79bdbcfb9350
+
     }//main
 
     
