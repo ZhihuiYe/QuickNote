@@ -1,7 +1,8 @@
 #/bin/bash
 
-CLASSPATH=$CLASSPATH:./elementDatabOjects
+CLASSPATH=$CLASSPATH:./elementData
+CLASSPATH=$CLASSPATH:./exceptions
 
-#javac -cp $CLASSPATH ./elementDataObjects/*.java
-#javac -cp $CLASSPATH *.java
-javac *.java
+javac -cp $CLASSPATH ./exceptions/*.java
+javac -cp $CLASSPATH ./elementData/*.java
+javac -cp $CLASSPATH *.java

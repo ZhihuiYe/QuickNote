@@ -13,13 +13,21 @@ public class ReaderReturnObject
         //construct does nothing
     }//construct
     
-    public void setDocElement(Element requireFileContentInElement)
+    public void setDocElement(Element requireFileContentInElement) 
+        throws ReaderReturnObjectException
     {
+        if (fileContentInElement != null)
+            throw new ReaderReturnObjectException
+                    ("ReaderReturnObject: fileContentInElement already setted");
         fileContentInElement = requireFileContentInElement;
     }//setDocElement
     
     public void setReaderDoc(Document requireReaderDoc)
+        throws ReaderReturnObjectException
     {
+        if (readerDoc != null)
+            throw new ReaderReturnObjectException
+                    ("ReaderReturnObject: readerDoc already setted");
         readerDoc = requireReaderDoc;
     }//setReaderDoc
 

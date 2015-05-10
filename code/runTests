@@ -1,0 +1,8 @@
+#/bin/bash
+
+CLASSPATH=$CLASSPATH:./elementData
+CLASSPATH=$CLASSPATH:./exceptions
+
+java -cp $CLASSPATH  QuickNote testCategory testTitle testContent
+rm testCategory.xml
+rm index.xml
