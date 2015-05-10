@@ -19,6 +19,7 @@ public class XMLReader
     }//Constructor
 
     /**
+<<<<<<< HEAD
      * It will read a xml file, if the file does exist then it will create a
      * ducument object from the file and read the rootElement of the file then
      * store them in a ReaderReturnObject. If the file does not exist then it
@@ -30,6 +31,19 @@ public class XMLReader
      * the rootElement of the xml file
      **/
     public ReaderReturnObject readFile(ElementData.DataType fileType, String givenFileName)
+=======
+     * It will read a xml file, if the file does exist then it will create a 
+     * ducument object from the file and read the rootElement of the file then
+     * store them in a ReaderReturnObject. If the file does not exist then it 
+     * will generate a new empty xml document and create a new rootElement; the 
+     * element type is depent on the type of the file.
+     * @param fileType The type of file xml file; INDEX, CATEGORY, etc
+     * @param fileName the name of the xml file
+     * @return a object contains Document object for reading the xml file and 
+     * the rootElement of the xml file
+     **/
+    public ReaderReturnObject readFile(ElementData.DataType fileType, String fileName)
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
             throws XMLReaderException
     {
         String fileName = "DefaultFileName";
@@ -82,9 +96,15 @@ public class XMLReader
             }//try
             catch (Exception e)
             {
+<<<<<<< HEAD
                 System.out.println(Print.ANSI_RED + "Failed to read "
                                     + "'" + fileName + "'"
                                     + Print.ANSI_RESET);
+=======
+                System.out.println(ElementPrinter.ANSI_RED + "Failed to read "
+                                    + "'" + fileName + "'"
+                                    + ElementPrinter.ANSI_RESET);
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
 
                 //if it failed to build a Document object form the selected file
                 //(the file does not exist) then build a empty one
@@ -100,7 +120,11 @@ public class XMLReader
                               idAttr.setValue(fileName);
                               rootElement.setAttributeNode(idAttr);
                               break;
+<<<<<<< HEAD
                     case INDEX    :
+=======
+                    case FILE    : 
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
                               rootElement = doc.createElement("index");
                               break;
                     default      :

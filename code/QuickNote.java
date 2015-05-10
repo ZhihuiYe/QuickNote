@@ -58,7 +58,16 @@ public class QuickNote
         String givenCategory    = arg[0];
         String givenNoteTitle   = arg[1];
         String givenNoteContent = arg[2];
+<<<<<<< HEAD
 
+=======
+        
+        XMLReader xmlreader = new XMLReader();
+        ReaderReturnObject oldCategoryFileContent = xmlreader.readFile(ElementData.DataType.CATEGORY, givenCategory);
+
+        XMLWriter xmlwriter = new XMLWriter(oldCategoryFileContent);
+        
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
         ElementPrinter elementPrinter = new ElementPrinter();
 
         XMLReader xmlreader = new XMLReader();
@@ -89,6 +98,7 @@ public class QuickNote
         updatedIndex   = indexWriter.writeFile(ElementData.DataType.INDEX, newNote2);
         elementPrinter.printIndexDoc(updatedIndex);
         
+<<<<<<< HEAD
         String result = null;
         result = findIndexCategory(updatedIndex, givenCategory);
         if(result == null)
@@ -108,6 +118,20 @@ public class QuickNote
         else
             System.out.println(result);
             */
+=======
+        newNote = new Note(ElementData.DataType.NOTE, givenNoteTitle + "1", "12/04/2015", givenNoteContent + "1");
+        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
+        elementPrinter.printCategory(includedNewNode);
+        
+        newNote = new Note(ElementData.DataType.NOTE, givenNoteTitle + "2", "13/05/2015", givenNoteContent + "2");
+        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
+        elementPrinter.printCategory(includedNewNode);
+        
+        newNote = new Note(ElementData.DataType.NOTE, givenNoteTitle + "3", "14/06/2015", givenNoteContent + "3");
+        includedNewNode = xmlwriter.writeFile(givenCategory, newNote);
+        elementPrinter.printCategory(includedNewNode);
+
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
     }//main
 
 

@@ -5,4 +5,7 @@ CLASSPATH=$CLASSPATH:./exceptions
 
 java -cp $CLASSPATH  QuickNote testCategory testTitle testContent
 rm testCategory.xml
+<<<<<<< HEAD
 rm index.xml
+=======
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96

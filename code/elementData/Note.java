@@ -18,7 +18,11 @@ public class Note extends ElementData
         createTimeInStr = givenCreateTime;
         contentInStr    = givenContent;
     }//Note
+<<<<<<< HEAD:code/elementData/Note.java
 
+=======
+    
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96:code/elementData/Note.java
     @Override
     public Element toElement(Document doc)
     {
@@ -68,13 +72,21 @@ public class Note extends ElementData
     {
         return createTimeInStr;
     }//getCreateTime
+<<<<<<< HEAD:code/elementData/Note.java
 
+=======
+    
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96:code/elementData/Note.java
     @Override
     public String getTime()
     {
         return createTimeInStr;
     }//getTime
+<<<<<<< HEAD:code/elementData/Note.java
 
+=======
+    
+>>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96:code/elementData/Note.java
     public String getContent()
     {
         return contentInStr;
