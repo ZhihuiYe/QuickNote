@@ -21,38 +21,76 @@ public class QuickNote
     }//Command
 
     private static ArrayList<String> userInputs = null;
+    private static XMLReader xmlreader = null;
 
     public static void main(String[] arg)
     {
-        ReaderReturnObject indexFile;
-        String targetCategory;
+        xmlreader = new XMLReader();
+        ReaderReturnObject indexFile = xmlreader.readFile(ElementData.FileType.INDEX, null);;
+        ReaderReturnObject categoryFile;
 
         Command command = userInputHandler(arg);
-        XMLReader xmlreader = new XMLReader();
+        xmlreader = new XMLReader();
+
         switch(command)
         {
             case FIND_CATEGORY:
-                    indexFile = xmlreader.readFile(ElementData.FileType.INDEX, null);
-                    targetCategory = userInputs.get(0);
-                    String result = findIndexCategory(indexFile.getDocElement(), targetCategory);
-                    if (result == null)
+                    String targetCategory = userInputs.get(0);
+                    String searchCategoryResult = findACategoryFromAIndexFile(indexFile.getDocElement(), targetCategory);
+                    if (searchCategoryResult == null)
                     {
                         System.out.println("Category does not exist");
                         System.exit(0);
                     }//if
                     else//if the category file exist then read the file
                     {
-                        xmlreader = new XMLReader();
-                        ReaderReturnObject categoryContent = xmlreader.readFile(ElementData.FileType.CATEGORY, result);
-                        Print.printCategory(categoryContent.getDocElement());
+                        categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, searchCategoryResult);
+                        Print.printCategory(categoryFile.getDocElement());
                         System.exit(0);
                     }//else
                     break;
             case     FIND_NOTE:
-                    indexFile = xmlreader.readFile(ElementData.FileType.INDEX, null);
+                    String targetNote = userInputs.get(0);
+                    ArrayList<String> categoriesContainTheSimilarNotes = findSimilarNoteFromIndexFile(indexFile.getDocElement(), targetNote);
+                    if (categoriesContainTheSimilarNotes.isEmpty())
+                    {
+                        System.out.println("Note does not exist");
+                        System.exit(0);
+                    }//if
+                    else
+                    {
+                        ArrayList<Element> selectedNotes = new ArrayList<>();
+                        for (int currentCategory = 0; currentCategory < categoriesContainTheSimilarNotes.size(); currentCategory++)
+                        {
+                            categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, categoriesContainTheSimilarNotes.get(currentCategory));
+                            Element categoryElement = categoryFile.getDocElement();
+                            NodeList notes = categoryElement.getElementsByTagName("note");
+                            for (int noteIndex = 0; noteIndex < notes.getLength(); noteIndex++)
+                            {
+                                Node currentNote = notes.item(noteIndex);
+                                if (currentNote.getNodeType() == Node.ELEMENT_NODE)
+                                {
+                                    String currentNoteTitle = ((Element)currentNote).getElementsByTagName("title").item(0).getTextContent();
+                                    System.out.println("find title: " + currentNoteTitle);
+                                    if(targetNote.equalsIgnoreCase(currentNoteTitle))
+                                        selectedNotes.add((Element)currentNote);
+                                }//if
+                            }//for
+                        }//for
+                        if (selectedNotes.isEmpty())
+                        {
+                            System.out.println("The note cannot find from any of the category files");
+                            System.exit(0);
+                        }//if
+                        else
+                        {
+                            for(Element currentNote : selectedNotes)
+                                Print.printNote(currentNote);
+
+                        }//else
+                    }//else
                     break;
             case   CREATE_NOTE:
-
                     //creating new note
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
                     Calendar now = Calendar.getInstance();
@@ -60,14 +98,13 @@ public class QuickNote
                                             ,sdf.format(now.getTime()), userInputs.get(2));
 
 
-                    ReaderReturnObject categoryFileContent = xmlreader.readFile(ElementData.FileType.CATEGORY, userInputs.get(0));
-                    XMLWriter  noteWriter = new XMLWriter(categoryFileContent);
+                    categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, userInputs.get(0));
+                    XMLWriter  noteWriter = new XMLWriter(categoryFile);
                     Element includedNewNode = noteWriter.writeFile(ElementData.DataType.NOTE, newNote);
                     Print.printCategory(includedNewNode);
 
-                    ReaderReturnObject indexFileContent    = xmlreader.readFile(ElementData.FileType.INDEX   , null);
-                    XMLWriter indexWriter = new XMLWriter(indexFileContent);
-                    Element updatedIndex    = indexWriter.writeFile(ElementData.DataType.INDEX_NOTE  , newNote);
+                    XMLWriter indexWriter = new XMLWriter(indexFile);
+                    Element updatedIndex  = indexWriter.writeFile(ElementData.DataType.INDEX_NOTE  , newNote);
                     Print.printIndexDoc(updatedIndex);
                     break;
             case          HELP:
@@ -129,15 +166,42 @@ public class QuickNote
     }//userInputHandler
 
 
-    private static String findIndexCategory(Element indexElement, String targetCategory)
+    private static ArrayList<String> findSimilarNoteFromIndexFile(Element indexElement, String targetNote)
     {
-        NodeList nList = indexElement.getElementsByTagName("category");
-        for (int nIndex = 0; nIndex < nList.getLength(); nIndex++)
+        ArrayList<String> categoriesContainTheSimilarNotes = new ArrayList<>();
+
+        NodeList categories = indexElement.getElementsByTagName("category");
+        for (int catIndex = 0; catIndex < categories.getLength(); catIndex++)
         {
-            Node currentNode = nList.item(nIndex);
-            if (currentNode.getNodeType() == Node.ELEMENT_NODE)
+            Node currentCategory = categories.item(catIndex);
+            if (currentCategory.getNodeType() == Node.ELEMENT_NODE)
             {
-                String categoryName = ((Element)currentNode).getAttribute("categoryName");
+                NodeList notes = ((Element)currentCategory).getElementsByTagName("note");
+                for(int noteIndex = 0; noteIndex < notes.getLength(); noteIndex++)
+                {
+                    Node currentNote = notes.item(noteIndex);
+                    if (currentNote.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                        String title = ((Element)currentNote).getTextContent();
+                        if (title.equalsIgnoreCase(targetNote))
+                            categoriesContainTheSimilarNotes.add( ((Element)currentCategory).getAttribute("categoryName"));
+                    }//if
+                }//for
+            }//if
+        }//for
+
+        return categoriesContainTheSimilarNotes;
+    }//findSimilarNoteFromIndexFile
+
+    private static String findACategoryFromAIndexFile(Element indexElement, String targetCategory)
+    {
+        NodeList categories = indexElement.getElementsByTagName("category");
+        for (int catIndex = 0; catIndex < categories.getLength(); catIndex++)
+        {
+            Node currentCategory = categories.item(catIndex);
+            if (currentCategory.getNodeType() == Node.ELEMENT_NODE)
+            {
+                String categoryName = ((Element)currentCategory).getAttribute("categoryName");
                 if (categoryName.equalsIgnoreCase(targetCategory))
                     return categoryName;
             }//if

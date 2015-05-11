@@ -4,5 +4,6 @@ CLASSPATH=$CLASSPATH:./elementData
 CLASSPATH=$CLASSPATH:./exceptions
 
 #java -cp $CLASSPATH  QuickNote createNote testCategory testTitle testContent
-java -cp $CLASSPATH  QuickNote findCategory testCategory 
+#java -cp $CLASSPATH  QuickNote findCategory testCategory
+java -cp $CLASSPATH  QuickNote findNote testTitle
 #rm *.xml

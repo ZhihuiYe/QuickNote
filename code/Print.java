@@ -84,7 +84,7 @@ public class Print
     }//printCategory
 
 
-    private static void printNote(Element givenNote)
+    public static void printNote(Element givenNote)
     {
         System.out.println("CurrentElement: " + givenNote.getNodeName() + "\n"
             + ANSI_GREEN + "Title:          " + ANSI_RESET
