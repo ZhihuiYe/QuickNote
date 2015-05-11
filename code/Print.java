@@ -37,10 +37,10 @@ public class Print
     {
         //Category tag
         System.out.println(ANSI_GREEN + "CurrentElement: " + ANSI_RESET
-                                    + givenCategoryElement.getNodeName()
+                                      + givenCategoryElement.getNodeName()
                          + "\nLastUpdate:     " + givenCategoryElement.getAttribute("lastUpdate")
                          + "\nCategory:       " + givenCategoryElement.getAttribute("categoryName")
-                         + "\nLatest Note     " + givenCategoryElement.getAttribute("latestNote"));
+                         + "\nLatestNote:     " + givenCategoryElement.getAttribute("latestNote") + "\n");
 
         //Note
         NodeList nList = givenCategoryElement.getElementsByTagName("note");
@@ -51,17 +51,10 @@ public class Print
             {
                 //Note Attribute
                 Element currentElement = (Element)currentNode;
-                System.out.println(ANSI_GREEN + "Title: " + ANSI_RESET
-                                            + currentElement.getTextContent() + "\n"
-                               + ANSI_CYAN  + "Time:  " + ANSI_RESET
-                                            + currentElement.getAttribute("createTime")  + "\n");
-
-                /*
-                //Keywords
-                NodeList kwList = currentElement.getElementsByTagName("keywords");
-                for (int kwI = 0; kwI < kwList.getLength(); kwI++)
-                    System.out.println("keywords: " + kwList.item(kwI).getTextContent());
-                */
+                System.out.println(ANSI_CYAN   + "Time:  " + ANSI_RESET
+                                  + currentElement.getAttribute("createTime")  + "\n"
+                                  + ANSI_GREEN + "Title: " + ANSI_RESET
+                                  + currentElement.getTextContent() + "\n");
             }//if
         }//for
     }//printIndexCategory
@@ -73,8 +66,8 @@ public class Print
     public static void printCategory(Element categoryElement)
     {
             System.out.println(ANSI_RED  + "Root element" + ANSI_RESET + " :"
-                                         + categoryElement.getNodeName()             + "\n"
-                        + "id:         " + categoryElement.getAttribute("id")        + "\n"
+                                         + categoryElement.getNodeName()              + "\n"
+                        + "id:         " + categoryElement.getAttribute("id")         + "\n"
                         + "lastUpdate: " + categoryElement.getAttribute("lastUpdate") + "\n");
 
             // Extract all the driver element from the document

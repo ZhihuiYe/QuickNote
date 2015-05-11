@@ -19,12 +19,8 @@ public class XMLWriter
 {
         private static Document doc;
         private static Element rootElement;
-<<<<<<< HEAD
         public static final String indexFileName = "index";
 
-=======
-        
->>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
         /**
          * XMLReader and Writer have to use the same Document object
          * @param ReaderReturnObject the object that return from XMLReader
@@ -45,7 +41,6 @@ public class XMLWriter
          * of the file; e.g. Note, File etc
          * @return Element the rootElement contains the new element
          **/
-<<<<<<< HEAD
         public Element writeFile(ElementData.DataType fileType, ElementData givenData)
         {
           try
@@ -53,12 +48,12 @@ public class XMLWriter
                 String fileName = "DefaultFileName";
                 switch(fileType)
                 {
-                   case CATEGORY:
+                   case       NOTE:
                                     Element noteElement = givenData.toElement(doc);
                                     rootElement.appendChild(noteElement);
                                     fileName = ((Note)givenData).getCategory();
                                     break;
-                   case INDEX:
+                   case INDEX_NOTE:
                                     Element indexNoteElement = givenData.toIndexElement(doc);
                                     Element categoryElement = findCategory( ((Note)givenData).getCategory() );
 
@@ -85,23 +80,8 @@ public class XMLWriter
                 Attr newTime = doc.createAttribute("lastUpdate");
                 newTime.setValue(givenData.getTime());
                 rootElement.setAttributeNode(newTime);
-=======
-        public Element writeFile(String fileName, ElementData givenData)
-        {
-          try
-          {
-                Element dataInElement = givenData.toElement(doc);
-                rootElement.appendChild(dataInElement);
-
-                //update the lastUpdate of the rootElement of the file ---------
-                Attr newTime = doc.createAttribute("lastUpdate");
-                newTime.setValue(givenData.getTime());
-                rootElement.setAttributeNode(newTime);
-                //update the lastUpdate of the rootElement of the file ---------
-
->>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
                 generateXMLFile(fileName);
-                
+
                 //return the rootElement for debuging
                 return rootElement;
           }//try
@@ -116,7 +96,6 @@ public class XMLWriter
                 return null;
           }//catch
         }//writeCategoryFile
-<<<<<<< HEAD
 
 
         private static Element findCategory(String targetCategory)
@@ -140,14 +119,7 @@ public class XMLWriter
 
             return newCategory;
         }//findCategory
-=======
-        
-        private static Boolean updateIndex(ElementData givenData)
-        {
-            
-            return true;
-        }//updateIndex
->>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
+
 
 
         // write the content into xml file
@@ -165,23 +137,10 @@ public class XMLWriter
                 StreamResult result = new StreamResult(new File(fileName + ".xml"));
                 transformer.transform(source, result);
 
-<<<<<<< HEAD
                 System.out.println(Print.ANSI_RED
                                  + "System: '" + fileName + "' generated/updated"
                                  + Print.ANSI_RESET + "\n");
 
                 return true;
         }//generateXMLFile
-=======
-                System.out.println(ElementPrinter.ANSI_RED 
-                                 + "System: '" + fileName + "' generated"
-                                 + ElementPrinter.ANSI_RESET + "\n");
-                                 
-                return true;
-        }//generateXMLFile
-        
-        //Helpper methods --------------------------------------------------------------
-        
-        //Helpper methods --------------------------------------------------------------
->>>>>>> defe8ccac325a0a0b19f61b6358799210d12ee96
 }//class
