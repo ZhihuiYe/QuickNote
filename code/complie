@@ -1,8 +1,13 @@
 #/bin/bash
 
-CLASSPATH=$CLASSPATH:./elementData
-CLASSPATH=$CLASSPATH:./exceptions
+#set CLASSPATH=~/Dropbox/GitHub/QuickNote/code;
+#CLASSPATH=$CLASSPATH:./elementObjects
+#CLASSPATH=$CLASSPATH:./exceptions
 
-javac -cp $CLASSPATH ./exceptions/*.java
-javac -cp $CLASSPATH ./elementData/*.java
-javac -cp $CLASSPATH *.java
+#javac -cp $CLASSPATH ./exceptions/*.java
+#javac -cp $CLASSPATH ./elementObjects/*.java
+#javac -cp $CLASSPATH *.java
+
+javac ./exceptions/*.java
+javac ./elementObjects/*.java
+javac *.java

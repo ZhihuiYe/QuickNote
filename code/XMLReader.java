@@ -1,3 +1,8 @@
+// package code;
+// import code.*;
+import elementObjects.*;
+import exceptions.*;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -35,10 +40,10 @@ public class XMLReader
         switch(fileType)
         {
             case CATEGORY:
-                fileName = givenFileName;
+                fileName = "data/" + givenFileName;
                 break;
             case    INDEX:
-                fileName = XMLWriter.indexFileName;
+                fileName = "data/" + XMLWriter.indexFileName;
                 break;
             default:
                 System.out.println("ReadFile: cannot identify the file type");

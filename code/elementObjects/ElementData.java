@@ -1,15 +1,17 @@
+package elementObjects;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public abstract class ElementData
 {
-    public enum FileType
+    public static enum FileType
     {
         CATEGORY,
         INDEX;
     }//FileType
 
-    public enum DataType
+    public static enum DataType
     {
         CATEGORY,
         INDEX_NOTE,

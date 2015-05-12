@@ -1,9 +1,7 @@
 #/bin/bash
 
-CLASSPATH=$CLASSPATH:./elementData
-CLASSPATH=$CLASSPATH:./exceptions
-
-#java -cp $CLASSPATH  QuickNote createNote testCategory testTitle testContent
-#java -cp $CLASSPATH  QuickNote findCategory testCategory
-java -cp $CLASSPATH  QuickNote findNote testTitle
+#ava  code.QuickNote createNote testCategory testTitle testContent
+#java -cp $CLASSPATH  code.QuickNote findCategory testCategory
+#java -cp $CLASSPATH  code.QuickNote findNote testTitle
 #rm *.xml
+java QuickNote $*

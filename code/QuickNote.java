@@ -1,3 +1,8 @@
+// package code;
+// import code.*;
+import elementObjects.*;
+import exceptions.*;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -13,6 +18,7 @@ public class QuickNote
 {
     private enum Command
     {
+        SHOW_ALL,
         FIND_CATEGORY,
         FIND_NOTE,
         CREATE_CATEGORY,
@@ -34,6 +40,9 @@ public class QuickNote
 
         switch(command)
         {
+            case      SHOW_ALL:
+                    Print.printIndexDoc(indexFile.getDocElement());
+                    break;
             case FIND_CATEGORY:
                     String targetCategory = userInputs.get(0);
                     String searchCategoryResult = findACategoryFromAIndexFile(indexFile.getDocElement(), targetCategory);
@@ -124,6 +133,8 @@ public class QuickNote
 
         switch(command)
         {
+            case        "showall":
+                    return Command.SHOW_ALL;
             case   "findcategory":
                     if(inputs.length < 1)
                     {

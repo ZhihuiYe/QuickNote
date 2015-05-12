@@ -1,3 +1,6 @@
+// package code;
+import exceptions.ReaderReturnObjectException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 public class ReaderReturnObject
@@ -5,15 +8,15 @@ public class ReaderReturnObject
     //the Document object that XMLReader has used
     //It will reused by XMLWriter
     private Document readerDoc;
-    //the file content read by XMLReader 
+    //the file content read by XMLReader
     private Element fileContentInElement;
-    
+
     public ReaderReturnObject()
     {
         //construct does nothing
     }//construct
-    
-    public void setDocElement(Element requireFileContentInElement) 
+
+    public void setDocElement(Element requireFileContentInElement)
         throws ReaderReturnObjectException
     {
         if (fileContentInElement != null)
@@ -21,7 +24,7 @@ public class ReaderReturnObject
                     ("ReaderReturnObject: fileContentInElement already setted");
         fileContentInElement = requireFileContentInElement;
     }//setDocElement
-    
+
     public void setReaderDoc(Document requireReaderDoc)
         throws ReaderReturnObjectException
     {
@@ -35,7 +38,7 @@ public class ReaderReturnObject
     {
         return fileContentInElement;
     }//getReaderDoc
-    
+
     public Document getReaderDoc()
     {
         return readerDoc;

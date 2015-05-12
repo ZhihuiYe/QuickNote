@@ -1,3 +1,8 @@
+// package code;
+// import code.*;
+import elementObjects.*;
+import exceptions.*;
+
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,12 +46,12 @@ public class XMLWriter
          * of the file; e.g. Note, File etc
          * @return Element the rootElement contains the new element
          **/
-        public Element writeFile(ElementData.DataType fileType, ElementData givenData)
+        public Element writeFile(ElementData.DataType dataType, ElementData givenData)
         {
           try
           {
                 String fileName = "DefaultFileName";
-                switch(fileType)
+                switch(dataType)
                 {
                    case       NOTE:
                                     Element noteElement = givenData.toElement(doc);
@@ -134,7 +139,7 @@ public class XMLWriter
 //                 StreamResult result =  new StreamResult(System.out);
 //                 transformer.transform(source, result);
 
-                StreamResult result = new StreamResult(new File(fileName + ".xml"));
+                StreamResult result = new StreamResult(new File("data/" + fileName + ".xml"));
                 transformer.transform(source, result);
 
                 System.out.println(Print.ANSI_RED
