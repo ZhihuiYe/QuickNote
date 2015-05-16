@@ -11,11 +11,16 @@ public class ReaderReturnObject
     //the file content read by XMLReader
     private Element fileContentInElement;
 
+
     public ReaderReturnObject()
     {
         //construct does nothing
     }//construct
 
+    /**
+     * save the root element of a xml file
+     * @param requireFileContentInElement the root element of a xml file
+     */
     public void setDocElement(Element requireFileContentInElement)
         throws ReaderReturnObjectException
     {
@@ -25,6 +30,10 @@ public class ReaderReturnObject
         fileContentInElement = requireFileContentInElement;
     }//setDocElement
 
+    /**
+     * save the Document object for XMLWriter to user
+     * @param requireReaderDoc the Document object that we used to read the xml file
+     */
     public void setReaderDoc(Document requireReaderDoc)
         throws ReaderReturnObjectException
     {
@@ -34,11 +43,17 @@ public class ReaderReturnObject
         readerDoc = requireReaderDoc;
     }//setReaderDoc
 
+    /**
+     * @return the rootElement that we have saved
+     */
     public Element getDocElement()
     {
         return fileContentInElement;
     }//getReaderDoc
 
+    /**
+     * @return the Document object that we have saved
+     */
     public Document getReaderDoc()
     {
         return readerDoc;

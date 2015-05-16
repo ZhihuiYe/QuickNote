@@ -9,16 +9,15 @@ public class Note extends ElementData
 {
     private String category;
     private String titleInStr;
-    private String createTimeInStr;
     private String contentInStr;
 
     public Note(String givenCategory, DataType givenDataType
-              , String givenTitle, String givenCreateTime, String givenContent)
+              , String givenTitle, String givenContent)
     {
         super(givenDataType);
+
         category        = givenCategory;
         titleInStr      = givenTitle;
-        createTimeInStr = givenCreateTime;
         contentInStr    = givenContent;
     }//Note
 
@@ -28,7 +27,7 @@ public class Note extends ElementData
         Element newNote  = doc.createElement("note");
 
         Attr createTime = doc.createAttribute("createTime");
-        createTime.setValue(createTimeInStr);
+        createTime.setValue(super.getTime());
 
         Element title    = doc.createElement("title");
         title.appendChild(doc.createTextNode(titleInStr));
@@ -50,17 +49,11 @@ public class Note extends ElementData
         indexNote.appendChild(doc.createTextNode(titleInStr));
 
         Attr createTime = doc.createAttribute("createTime");
-        createTime.setValue(createTimeInStr);
+        createTime.setValue(super.getTime());
         indexNote.setAttributeNode(createTime);
 
         return indexNote;
     }//toIndexElement
-
-    @Override
-    public String getTime()
-    {
-        return createTimeInStr;
-    }//getTime
 
     public String getCategory()
     {
@@ -74,7 +67,7 @@ public class Note extends ElementData
 
     public String getCreateTime()
     {
-        return createTimeInStr;
+        return super.getTime();
     }//getCreateTime
 
 

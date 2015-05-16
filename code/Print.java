@@ -20,34 +20,42 @@ public class Print
     public static final String ANSI_WHITE  = "\u001B[37m";
 
 
-    public static void printIndexDoc(Element categoryElement)
+    /**
+     * Print out all content of the index file
+     * @param indexElement
+     */
+    public static void printIndexDoc(Element indexElement)
     {
         //Index tag
-        System.out.println(ANSI_RED  + "Root element: " + ANSI_RESET
-                                   + categoryElement.getNodeName() + "\n"
+        System.out.println(ANSI_RED  + "Printing : " + ANSI_RESET
+                                   + indexElement.getNodeName() + "\n"
                          + ANSI_BLUE + "lastUpdate:   " + ANSI_RESET
-                                   + categoryElement.getAttribute("lastUpdate") + "\n");
+                                   + indexElement.getAttribute("lastUpdate") + "\n");
 
         //Category tag
-        NodeList nList = categoryElement.getElementsByTagName("category");
-        for (int nIndex = 0; nIndex < nList.getLength(); nIndex++)
+        NodeList categories = indexElement.getElementsByTagName("category");
+        for (int cIndex = 0; cIndex < categories.getLength(); cIndex++)
         {
-            Node currentNode = nList.item(nIndex);
+            Node currentNode = categories.item(cIndex);
             if (currentNode.getNodeType() == Node.ELEMENT_NODE)
                 printIndexCategory((Element)currentNode);
         }//for
     }//printIndexDoc
 
+    /**
+     * Print out all content of a category element(from a index file)
+     * @param givenCategoryElement the categoryElement that we want to print
+     */
     public static void printIndexCategory(Element givenCategoryElement)
     {
         //Category tag
-        System.out.println(ANSI_GREEN + "CurrentElement: " + ANSI_RESET
+        System.out.println(/*ANSI_GREEN + "Printing : " + ANSI_RESET
                                       + givenCategoryElement.getNodeName()
+                         +*/ "\nCategory:       " + givenCategoryElement.getAttribute("categoryName")
                          + "\nLastUpdate:     " + givenCategoryElement.getAttribute("lastUpdate")
-                         + "\nCategory:       " + givenCategoryElement.getAttribute("categoryName")
                          + "\nLatestNote:     " + givenCategoryElement.getAttribute("latestNote") + "\n");
 
-        //Note
+        //Print all note that the category element contains
         NodeList nList = givenCategoryElement.getElementsByTagName("note");
         for (int nIndex = 0; nIndex < nList.getLength(); nIndex++)
         {
@@ -66,11 +74,12 @@ public class Print
 
 
     /**
-     * Print out the notes element content from a document element
+     * Print out the notes element content from a document element(from a category file)
+     * @param categoryElement the category that we want to print
      **/
     public static void printCategory(Element categoryElement)
     {
-            System.out.println(ANSI_RED  + "Root element" + ANSI_RESET + " :"
+            System.out.println(ANSI_RED  + "Printing :" + ANSI_RESET + " :"
                                          + categoryElement.getNodeName()              + "\n"
                         + "id:         " + categoryElement.getAttribute("id")         + "\n"
                         + "lastUpdate: " + categoryElement.getAttribute("lastUpdate") + "\n");
@@ -89,10 +98,14 @@ public class Print
     }//printCategory
 
 
+    /**
+     * Print out a note element (from a category file)
+     * @param givenNote the note that we want to print
+     */
     public static void printNote(Element givenNote)
     {
-        System.out.println("CurrentElement: " + givenNote.getNodeName() + "\n"
-            + ANSI_GREEN + "Title:          " + ANSI_RESET
+        System.out.println(/*"CurrentElement: " + givenNote.getNodeName() + "\n"
+            + */ANSI_GREEN + "Title:          " + ANSI_RESET
                          + givenNote.getElementsByTagName("title").item(0).getTextContent() + "\n"
                          + "Create Time:    " + givenNote.getAttribute("createTime") + "\n"
                          + "Content:        " + givenNote.getElementsByTagName("content").item(0).getTextContent());

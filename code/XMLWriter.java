@@ -28,9 +28,9 @@ public class XMLWriter
 
         /**
          * XMLReader and Writer have to use the same Document object
-         * @param ReaderReturnObject the object that return from XMLReader
+         * @param fileContent contains the document object that used to read the file
+         * and the rootElement of the file
          **/
-
         public XMLWriter(ReaderReturnObject fileContent)
         {
             doc = fileContent.getReaderDoc();
@@ -38,13 +38,12 @@ public class XMLWriter
         }//XMLWriter
 
         /**
-         * Append the new note into a document.
+         * Append the new note into the document.
          * the document is given by the return object 'ReaderReturnObject'
          * which is empty if it faild to read a category file
-         * @param String fileName the name of the xml file that will be producted
-         * @param ElementData A object contains the data to product a subelement
-         * of the file; e.g. Note, File etc
-         * @return Element the rootElement contains the new element
+         * @param dataType the type of data is trying to write
+         * @param  givenData object contains all requied data
+         * @return Element the new rootElement contains the new element
          **/
         public Element writeFile(ElementData.DataType dataType, ElementData givenData)
         {
@@ -103,6 +102,12 @@ public class XMLWriter
         }//writeCategoryFile
 
 
+        /**
+         * Find the category element contains the targetCategory
+         * @param targetCategory the category that we want to find
+         * @return the element that match the targetCategory
+         * or return a new empty category element
+         */
         private static Element findCategory(String targetCategory)
         {
             NodeList nList = rootElement.getElementsByTagName("category");
@@ -112,7 +117,7 @@ public class XMLWriter
                 if (currentNode.getNodeType() == Node.ELEMENT_NODE)
                 {
                     String categoryName = ((Element)currentNode).getAttribute("categoryName");
-                    if (categoryName.equals(targetCategory))
+                    if (categoryName.equalsIgnoreCase(targetCategory))
                         return (Element)currentNode;
                 }//if
             }//for
@@ -127,7 +132,9 @@ public class XMLWriter
 
 
 
-        // write the content into xml file
+        /**
+         * generate the xml file from the rootElement
+         */
         private static Boolean generateXMLFile(String fileName)
             throws ParserConfigurationException, TransformerException
         {

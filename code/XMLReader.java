@@ -28,7 +28,7 @@ public class XMLReader
      * store them in a ReaderReturnObject. If the file does not exist then it
      * will generate a new empty xml document and create a new rootElement; the
      * element type is depent on the type of the file.
-     * @param fileType The type of file xml file; INDEX, CATEGORY, etc
+     * @param fileType The type of file xml file that is reading; INDEX, CATEGORY, etc
      * @param fileName the name of the xml file
      * @return a object contains Document object for reading the xml file and
      * the rootElement of the xml file
@@ -36,6 +36,7 @@ public class XMLReader
     public ReaderReturnObject readFile(ElementData.FileType fileType, String givenFileName)
             throws XMLReaderException
     {
+        //identify the file type and generate the correct xml fileName
         String fileName = "DefaultFileName";
         switch(fileType)
         {
@@ -58,8 +59,7 @@ public class XMLReader
             Document doc;
             ReaderReturnObject returnObject = new ReaderReturnObject();
 
-            //Trying to set the create a document object
-            try
+            try//Try read the content of the selected xml file
             {
                 //try to build a Document object from the selected file
                 File fXmlFile = new File(fileName + ".xml");
@@ -86,6 +86,7 @@ public class XMLReader
             }//try
             catch (Exception e)
             {
+                //if it fail to read the selected xml file
                 System.out.println(Print.ANSI_RED + "Failed to read "
                                     + "'" + fileName + "'"
                                     + Print.ANSI_RESET);
@@ -95,6 +96,7 @@ public class XMLReader
                 doc = docBuilder.newDocument();
                 returnObject.setReaderDoc(doc);
 
+                //create a new root element
                 Element rootElement = null;
                 switch (fileType)
                 {
@@ -102,7 +104,7 @@ public class XMLReader
                               System.out.println("Creating a new category file: " + fileName);
                               rootElement = doc.createElement("category");
                               Attr idAttr = doc.createAttribute("id");
-                              idAttr.setValue(fileName);
+                              idAttr.setValue(givenFileName);
                               rootElement.setAttributeNode(idAttr);
                               break;
 
