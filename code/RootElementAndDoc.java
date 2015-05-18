@@ -1,9 +1,9 @@
 // package code;
-import exceptions.ReaderReturnObjectException;
+import exceptions.RootElementAndDocException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-public class ReaderReturnObject
+public class RootElementAndDoc
 {
     //the Document object that XMLReader has used
     //It will reused by XMLWriter
@@ -12,7 +12,7 @@ public class ReaderReturnObject
     private Element fileContentInElement;
 
 
-    public ReaderReturnObject()
+    public RootElementAndDoc()
     {
         //construct does nothing
     }//construct
@@ -22,11 +22,11 @@ public class ReaderReturnObject
      * @param requireFileContentInElement the root element of a xml file
      */
     public void setDocElement(Element requireFileContentInElement)
-        throws ReaderReturnObjectException
+        throws RootElementAndDocException
     {
         if (fileContentInElement != null)
-            throw new ReaderReturnObjectException
-                    ("ReaderReturnObject: fileContentInElement already setted");
+            throw new RootElementAndDocException
+                    ("RootElementAndDoc: fileContentInElement already setted");
         fileContentInElement = requireFileContentInElement;
     }//setDocElement
 
@@ -35,11 +35,11 @@ public class ReaderReturnObject
      * @param requireReaderDoc the Document object that we used to read the xml file
      */
     public void setReaderDoc(Document requireReaderDoc)
-        throws ReaderReturnObjectException
+        throws RootElementAndDocException
     {
         if (readerDoc != null)
-            throw new ReaderReturnObjectException
-                    ("ReaderReturnObject: readerDoc already setted");
+            throw new RootElementAndDocException
+                    ("RootElementAndDoc: readerDoc already setted");
         readerDoc = requireReaderDoc;
     }//setReaderDoc
 

@@ -38,8 +38,8 @@ public class QuickNote
     public static void main(String[] arg)
     {
         xmlreader = new XMLReader();
-        ReaderReturnObject indexFile = xmlreader.readFile(ElementData.FileType.INDEX, null);;
-        ReaderReturnObject categoryFile;
+        RootElementAndDoc indexFile = xmlreader.readFile(ElementData.FileType.INDEX, null);;
+        RootElementAndDoc categoryFile;
 
         Command command = userInputHandler(arg);
         xmlreader = new XMLReader();

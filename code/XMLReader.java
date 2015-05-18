@@ -25,7 +25,7 @@ public class XMLReader
     /**
      * It will read a xml file, if the file does exist then it will create a
      * ducument object from the file and read the rootElement of the file then
-     * store them in a ReaderReturnObject. If the file does not exist then it
+     * store them in a RootElementAndDoc. If the file does not exist then it
      * will generate a new empty xml document and create a new rootElement; the
      * element type is depent on the type of the file.
      * @param fileType The type of file xml file that is reading; INDEX, CATEGORY, etc
@@ -33,7 +33,7 @@ public class XMLReader
      * @return a object contains Document object for reading the xml file and
      * the rootElement of the xml file
      **/
-    public ReaderReturnObject readFile(ElementData.FileType fileType, String givenFileName)
+    public RootElementAndDoc readFile(ElementData.FileType fileType, String givenFileName)
             throws XMLReaderException
     {
         //identify the file type and generate the correct xml fileName
@@ -57,7 +57,7 @@ public class XMLReader
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = dbFactory.newDocumentBuilder();
             Document doc;
-            ReaderReturnObject returnObject = new ReaderReturnObject();
+            RootElementAndDoc returnObject = new RootElementAndDoc();
 
             try//Try read the content of the selected xml file
             {

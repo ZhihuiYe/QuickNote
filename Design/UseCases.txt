@@ -1,0 +1,37 @@
+--------------------------------------------------------------------------------
+Name UC-1: ShowAll Command
+--------------------------------------------------------------------------------
+Summary: Print out all content that the index.xml contains
+--------------------------------------------------------------------------------
+Rationale: Users often want to see what notes the system currently stored before
+they find/print out the notes/categories. The content of the index.xml also help
+the system to search a note or category.
+--------------------------------------------------------------------------------
+Preconditions: the index.xml must not empty and contains the correct format of
+data.
+--------------------------------------------------------------------------------
+Postconditions: all valuable content of the index.xml file must print out in
+user-friendly layout.
+--------------------------------------------------------------------------------
+Result: Successfully shows all the valuable content of the index file
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Name UC-2: CreateNote Command
+--------------------------------------------------------------------------------
+Summary: Create a note; adding a new note into a category file and the index file
+--------------------------------------------------------------------------------
+Rationale: Create a new note from the information that given by users from standard
+inputs. The new note will be insert into a existing category file or a newly
+created if the selected category file does not exist. Then record the changes in
+index file(Print out the selected category and updated index file for debuging).
+--------------------------------------------------------------------------------
+Preconditions: The data in category files and the index file are related(all
+categories and theirs notes should be record in the index file) or none of the
+files are exist, the system will generate those file automaticly.
+--------------------------------------------------------------------------------
+Postconditions: Newly created notes record in index file (the category headings)
+and the category files.
+--------------------------------------------------------------------------------
+Result: Successfully shows the correct updated index file and category files
+--------------------------------------------------------------------------------

@@ -31,7 +31,7 @@ public class XMLWriter
          * @param fileContent contains the document object that used to read the file
          * and the rootElement of the file
          **/
-        public XMLWriter(ReaderReturnObject fileContent)
+        public XMLWriter(RootElementAndDoc fileContent)
         {
             doc = fileContent.getReaderDoc();
             rootElement =fileContent.getDocElement();
@@ -39,7 +39,7 @@ public class XMLWriter
 
         /**
          * Append the new note into the document.
-         * the document is given by the return object 'ReaderReturnObject'
+         * the document is given by the return object 'RootElementAndDoc'
          * which is empty if it faild to read a category file
          * @param dataType the type of data is trying to write
          * @param  givenData object contains all requied data
