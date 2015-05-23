@@ -1,7 +1,5 @@
 #/bin/bash
 
-#ava  code.QuickNote createNote testCategory testTitle testContent
-#java -cp $CLASSPATH  code.QuickNote findCategory testCategory
-#java -cp $CLASSPATH  code.QuickNote findNote testTitle
-#rm *.xml
+cd ~/Dropbox/GitHub/QuickNote/code
 java QuickNote $*
+cd -
