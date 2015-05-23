@@ -20,21 +20,25 @@ public class QuickNote
     //the type of command the program will accept
     private enum Command
     {
-        SHOW_ALL        ("Show All"),
-        FIND_CATEGORY   ("Find Category"),
-        FIND_NOTE       ("Find Note"),
-        CREATE_CATEGORY ("Create Category"),
-        CREATE_NOTE     ("Create Note"),
-        HELP            ("Help");
+        SHOW_ALL        ("Show All        : null"),
+        FIND_CATEGORY   ("Find Category   : categoryName"),
+        FIND_NOTE       ("Find Note       : noteTitle"),
+        CREATE_CATEGORY ("Create Category : categoryName"),
+        CREATE_NOTE     ("Create Note     : categoryName(new/existing), noteTitle, noteContent"),
+        HELP            ("Help            : null");
 
         private final String inString;
         Command(String inString) { this.inString = inString; }
         public String toString() { return inString; }
+
+        /**
+         * @return all the command in a String
+         */
         public static String allString()
         {
-            String allCommandInStr = "";
+            String allCommandInStr = "Commands         : Require Info\n";
             for(Command currentCommand : Command.values())
-                allCommandInStr += " " + currentCommand + "\n";
+                allCommandInStr += "-" + currentCommand + "\n";
 
             return allCommandInStr;
         }//allString
@@ -155,7 +159,8 @@ public class QuickNote
                         Print.printIndexDoc(updatedIndex);
                         break;
                 case          HELP:
-                        System.out.println("Comming soon.");
+                        System.out.println(Print.ANSI_GREEN + "Help Memu:\n"
+                                           + Command.allString() + Print.ANSI_RESET);
                         break;
                 default:
                         System.out.println("Cannot identify the command");
@@ -253,7 +258,7 @@ public class QuickNote
             String allCommand = "";
 
             command = getUserInput("Please selected your command."
-                                    "\nOptions are below:\n"
+                                    + "\nOptions are below:\n"
                                     + Command.allString(), true);
         }//if
         else
@@ -329,7 +334,8 @@ public class QuickNote
                             break;
                     }//switch
                     return Command.CREATE_NOTE;
-
+            case           "help":
+                    return Command.HELP;
             default:
                     System.out.println("Cannot identify the command");
                     System.exit(-1);
@@ -339,6 +345,11 @@ public class QuickNote
 
 
     private static BufferedReader sInput = null;
+    /**
+     * @param message the message that will show to the user before user enter their input
+     * @param inputCorrection true when it need user to confirm theirs input
+     * @return the user's input
+     */
     private static String getUserInput(String message, Boolean inputCorrection)
         throws IOException
     {
