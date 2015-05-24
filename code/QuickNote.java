@@ -176,6 +176,12 @@ public class QuickNote
 
                             if (answer.equalsIgnoreCase("N") || answer.equalsIgnoreCase("No"))
                                     currentCategory = getUserInput("Please enter a new category:", false);
+                            else //if the answer is yes and the similarCategory is not null
+                                // that means the user want to write into an existing category
+                            {
+                                    if(similarCategory != null)
+                                        currentCategory = similarCategory;
+                            }//else
 
                             do//confirm the new category
                             {
@@ -195,7 +201,7 @@ public class QuickNote
                         do
                         {
                             similarTitles = findSimilarNoteFromIndexFile(indexFile.getDocElement()
-                                                                                            ,currentNoteTitle);
+                                                                         ,currentNoteTitle);
                             if (similarTitles.size() > 0)
                                 currentNoteTitle = getUserInput("The note title '" + currentNoteTitle
                                                                 + "' is already existed, please enter an new title:", true);
@@ -206,7 +212,7 @@ public class QuickNote
                                                 , currentNoteTitle, userInputs.get(2));
 
                         //read the selected category file
-                        categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, similarCategory);
+                        categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, currentCategory);
                         XMLWriter noteWriter = new XMLWriter(categoryFile);
                         Element includedNewNode = noteWriter.writeFile(ElementData.DataType.NOTE, newNote);
                         Print.printCategory(includedNewNode);
@@ -260,7 +266,7 @@ public class QuickNote
                     if (currentNote.getNodeType() == Node.ELEMENT_NODE)
                     {
                         String title = ((Element)currentNote).getTextContent();
-                        if (title.equalsIgnoreCase(targetNote.replace(" ", "")))
+                        if (title.replace(" ", "").equalsIgnoreCase(targetNote.replace(" ", "")))
                             categoriesContainTheSimilarNotes.add( ((Element)currentCategory).getAttribute("categoryName"));
                     }//if
                 }//for
@@ -290,7 +296,7 @@ public class QuickNote
             if (currentCategory.getNodeType() == Node.ELEMENT_NODE)
             {
                 String categoryName = ((Element)currentCategory).getAttribute("categoryName");
-                if (categoryName.equalsIgnoreCase(targetCategory))
+                if (categoryName.equalsIgnoreCase(targetCategory.replace(" ", "")))
                     return categoryName;
             }//if
         }//for
