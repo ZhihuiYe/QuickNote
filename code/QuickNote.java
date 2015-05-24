@@ -117,7 +117,7 @@ public class QuickNote
                                     if (currentNote.getNodeType() == Node.ELEMENT_NODE)
                                     {
                                         String currentNoteTitle = ((Element)currentNote).getElementsByTagName("title").item(0).getTextContent();
-                                        if(targetNote.equalsIgnoreCase(currentNoteTitle))
+                                        if(targetNote.equalsIgnoreCase(currentNoteTitle.replace(" ", "")))
                                             selectedNotes.add((Element)currentNote);
                                     }//if
                                 }//for
