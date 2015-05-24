@@ -20,12 +20,12 @@ public class QuickNote
     //the type of command the program will accept
     private enum Command
     {
-        SHOW_ALL        ("Show All        : null"),
-        FIND_CATEGORY   ("Find Category   : categoryName"),
-        FIND_NOTE       ("Find Note       : noteTitle"),
-        CREATE_CATEGORY ("Create Category : categoryName"),
-        CREATE_NOTE     ("Create Note     : categoryName(new/existing), noteTitle, noteContent"),
-        HELP            ("Help            : null");
+        SHOW_ALL        ("ShowAll        : <null>"),
+        FIND_CATEGORY   ("FindCategory   : <categoryName>"),
+        FIND_NOTE       ("FindNote       : <noteTitle>"),
+        CREATE_CATEGORY ("CreateCategory : <categoryName>"),
+        CREATE_NOTE     ("CreateNote     : <categoryName(new/existing)> <noteTitle> <noteContent>"),
+        HELP            ("Help           : <null>");
 
         private final String inString;
         Command(String inString) { this.inString = inString; }
@@ -36,7 +36,7 @@ public class QuickNote
          */
         public static String allString()
         {
-            String allCommandInStr = "Commands         : Require Info\n";
+            String allCommandInStr = "Commands        : Require Info\n";
             for(Command currentCommand : Command.values())
                 allCommandInStr += "-" + currentCommand + "\n";
 
@@ -52,6 +52,7 @@ public class QuickNote
      * the user inputs will passed to userInputHandler to decode
      * the method will return a Command enum and the required info will stored in userInputs
      * then the main program will process the command
+     * @param arg contains the user inputs; Command + parameters
      */
     public static void main(String[] arg)
     {
@@ -61,6 +62,8 @@ public class QuickNote
             RootElementAndDoc indexFile = xmlreader.readFile(ElementData.FileType.INDEX, null);;
             RootElementAndDoc categoryFile;
 
+            //passed user's inputs to this method to decode the command and
+            //ask the user to provide the necessary info and store into "userInputs"
             Command command = userInputHandler(arg);
             xmlreader = new XMLReader();
 
@@ -130,25 +133,80 @@ public class QuickNote
                             {
                                 for(Element currentNote : selectedNotes)
                                     Print.printNote(currentNote);
-
                             }//else
                         }//else
                         break;
+                case   CREATE_CATEGORY:
+                        System.out.println("comming soon.");
+                        break;
                 case   CREATE_NOTE:
-                        //does the category exit?
-                        String foundCategoryName = findACategoryFromAIndexFile(indexFile.getDocElement(), userInputs.get(0));
-                        if (foundCategoryName == null)
-                            foundCategoryName = userInputs.get(0);
+                        //check category is existed or not
+                        String currentCategory = userInputs.get(0);
+
+                        String similarCategory = null;
+                        String answer = null;
+                        String finalAnswer = null;
+
+                        do//while user not happy with the category he/she entered
+                        {
+                            similarCategory = findACategoryFromAIndexFile(indexFile.getDocElement(), currentCategory);
+
+                            do//does the user wish to write into an existing category?
+                            //or does the user wish to create a new category?
+                            {
+                                if (similarCategory == null)
+                                    answer = getUserInput("The category "
+                                                            + Print.ANSI_GREEN + "DOES NOT " + Print.ANSI_RESET
+                                                            + Print.ANSI_RED
+                                                            + "exist.\nDo you wish to create a new category?("
+                                                            + currentCategory + ")"
+                                                            , false);
+                                else
+                                    answer = getUserInput("The category "
+                                                            + Print.ANSI_GREEN + "DOES " + Print.ANSI_RESET
+                                                            + Print.ANSI_RED
+                                                            + "exist.\nDo you wish to write into this category?("
+                                                            + similarCategory + ")"
+                                                            , false);
+
+                            }while(    (! answer.equalsIgnoreCase("Yes"))
+                                    && (! answer.equalsIgnoreCase("Y" ))
+                                    && (! answer.equalsIgnoreCase("No"))
+                                    && (! answer.equalsIgnoreCase("n" )));
+
+                            if (answer.equalsIgnoreCase("N") || answer.equalsIgnoreCase("No"))
+                                    currentCategory = getUserInput("Please enter a new category:", false);
+
+                            do//confirm the new category
+                            {
+                                finalAnswer = getUserInput("Does '" + currentCategory + "' correct?", false);
+                            }while(    (! finalAnswer.equalsIgnoreCase("Yes"))
+                                    && (! finalAnswer.equalsIgnoreCase("Y"  ))
+                                    && (! finalAnswer.equalsIgnoreCase("No" ))
+                                    && (! finalAnswer.equalsIgnoreCase("n"  )));
+
+                        }while(         answer.equalsIgnoreCase("No") ||      answer.equalsIgnoreCase("N")
+                                || finalAnswer.equalsIgnoreCase("No") || finalAnswer.equalsIgnoreCase("N") );
+
+
+                        //check title note is existed or not
+                        String currentNoteTitle = userInputs.get(1);
+                        ArrayList<String> similarTitles = null;
+                        do
+                        {
+                            similarTitles = findSimilarNoteFromIndexFile(indexFile.getDocElement()
+                                                                                            ,currentNoteTitle);
+                            if (similarTitles.size() > 0)
+                                currentNoteTitle = getUserInput("The note title '" + currentNoteTitle
+                                                                + "' is already existed, please enter an new title:", true);
+                        }while(similarTitles.size() > 0);
 
                         //creating a new note
-                        Note newNote = new Note(foundCategoryName, ElementData.DataType.NOTE
-                                                , userInputs.get(1), userInputs.get(2));
-
-
-
+                        Note newNote = new Note(currentCategory, ElementData.DataType.NOTE
+                                                , currentNoteTitle, userInputs.get(2));
 
                         //read the selected category file
-                        categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, foundCategoryName);
+                        categoryFile = xmlreader.readFile(ElementData.FileType.CATEGORY, similarCategory);
                         XMLWriter noteWriter = new XMLWriter(categoryFile);
                         Element includedNewNode = noteWriter.writeFile(ElementData.DataType.NOTE, newNote);
                         Print.printCategory(includedNewNode);
@@ -202,7 +260,7 @@ public class QuickNote
                     if (currentNote.getNodeType() == Node.ELEMENT_NODE)
                     {
                         String title = ((Element)currentNote).getTextContent();
-                        if (title.equalsIgnoreCase(targetNote))
+                        if (title.equalsIgnoreCase(targetNote.replace(" ", "")))
                             categoriesContainTheSimilarNotes.add( ((Element)currentCategory).getAttribute("categoryName"));
                     }//if
                 }//for
@@ -259,7 +317,7 @@ public class QuickNote
 
             command = getUserInput("Please selected your command."
                                     + "\nOptions are below:\n"
-                                    + Command.allString(), true);
+                                    + Command.allString(), false);
         }//if
         else
             command = inputs[0];
@@ -278,7 +336,7 @@ public class QuickNote
                     switch (userInputs.size())
                     {
                         case  0:
-                            userInputs.add(getUserInput("Please enter the category that you want to search", true));
+                            userInputs.add(getUserInput("Please enter the category \nthat you want to search", true));
                         default:
                             break;
                     }//switch
@@ -294,7 +352,7 @@ public class QuickNote
                     switch (userInputs.size())
                     {
                         case  0:
-                            userInputs.add(getUserInput("Please enter the category that you want to create", true));
+                            userInputs.add(getUserInput("Please enter the category \nthat you want to create", true));
                         default:
                             break;
                     }//switch
@@ -309,7 +367,7 @@ public class QuickNote
                     switch (userInputs.size())
                     {
                         case  0:
-                            userInputs.add(getUserInput("Please enter the title of the note that you want to find", true));
+                            userInputs.add(getUserInput("Please enter the title of the note \nthat you want to find", true));
                         default:
                             break;
                     }//switch
@@ -324,12 +382,12 @@ public class QuickNote
                     switch (userInputs.size())
                     {
                         case  0:
-                            userInputs.add(getUserInput("Please enter the category(new/existing one)"
-                                            + " that you want to put your new note into.", true));
+                            userInputs.add(getUserInput("Please enter the category(new/existing one)\n"
+                                            + "that you want to put your new note into.", false));
                         case  1:
-                            userInputs.add(getUserInput("Please enter the title of the note.", true));
+                            userInputs.add(getUserInput("Please enter the title of the note.", false));
                         case  2:
-                            userInputs.add(getUserInput("Please enter the content of the note.", true));
+                            userInputs.add(getUserInput("Please enter the content of the note.", false));
                         default:
                             break;
                     }//switch

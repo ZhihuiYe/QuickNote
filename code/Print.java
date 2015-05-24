@@ -64,9 +64,9 @@ public class Print
             {
                 //Note Attribute
                 Element currentElement = (Element)currentNode;
-                System.out.println(ANSI_CYAN   + "Time:  " + ANSI_RESET
+                System.out.println(ANSI_CYAN   + "\tTime:  " + ANSI_RESET
                                   + currentElement.getAttribute("createTime")  + "\n"
-                                  + ANSI_GREEN + "Title: " + ANSI_RESET
+                                  + ANSI_GREEN + "\tTitle: " + ANSI_RESET
                                   + currentElement.getTextContent() + "\n");
             }//if
         }//for

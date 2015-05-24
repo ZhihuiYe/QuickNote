@@ -2,4 +2,4 @@
 
 cd ~/Dropbox/GitHub/QuickNote/code
 java QuickNote $*
-cd -
+cd - 1> /dev/null
