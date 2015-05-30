@@ -1,0 +1,9 @@
+#/bin/bash
+
+javac ./exceptions/*.java
+javac ./elements/*.java
+javac ./views/*.java
+javac ./models/*.java
+javac ./controllers/*.java
+
+javac *.java

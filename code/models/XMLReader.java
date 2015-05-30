@@ -1,6 +1,8 @@
-// package code;
-// import code.*;
-import elementObjects.*;
+package models;
+
+import elements.ElementData.FileType;
+import views.*;
+import elements.*;
 import exceptions.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,7 +35,7 @@ public class XMLReader
      * @return a object contains Document object for reading the xml file and
      * the rootElement of the xml file
      **/
-    public RootElementAndDoc readFile(ElementData.FileType fileType, String givenFileName)
+    public RootElementAndDoc readFile(FileType fileType, String givenFileName)
             throws XMLReaderException
     {
         //identify the file type and generate the correct xml fileName

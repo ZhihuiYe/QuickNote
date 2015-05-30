@@ -1,7 +1,4 @@
-// package code;
-// import code.*;
-import elementObjects.*;
-import exceptions.*;
+package views;
 
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;

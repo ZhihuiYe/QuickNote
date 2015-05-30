@@ -1,5 +1,0 @@
-#/bin/bash
-
-javac ./exceptions/*.java
-javac ./elementObjects/*.java
-javac *.java

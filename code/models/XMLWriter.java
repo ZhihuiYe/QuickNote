@@ -1,7 +1,8 @@
-// package code;
-// import code.*;
-import elementObjects.*;
-import exceptions.*;
+package models;
+
+import elements.ElementData.DataType;
+import views.*;
+import elements.*;import exceptions.*;
 
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
@@ -45,7 +46,7 @@ public class XMLWriter
          * @param  givenData object contains all requied data
          * @return Element the new rootElement contains the new element
          **/
-        public Element writeFile(ElementData.DataType dataType, ElementData givenData)
+        public Element writeFile(DataType dataType, ElementData givenData)
         {
           try
           {

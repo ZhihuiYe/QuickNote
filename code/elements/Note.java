@@ -1,5 +1,6 @@
-package elementObjects;
-import elementObjects.*;
+package elements;
+
+import elements.ElementData;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;

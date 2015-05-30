@@ -1,4 +1,5 @@
-// package code;
+package models;
+
 import exceptions.RootElementAndDocException;
 
 import org.w3c.dom.Document;
