@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Search
 {
-    //----- Search Methods ---------------------------------------------------------
     /**
      * find a similar note from the index file
      * @param targetNote the note that we want to search
@@ -51,13 +50,16 @@ public class Search
      * @param targetCategory the category that we want to find
      * @return return null if no search category or return the name of the category file
      */
-    public static String findACategoryFromAIndexFile(Element indexElement, String targetCategory)
+    public static ArrayList<String> findACategoryFromAIndexFile(Element indexElement, String targetCategory)
     {
         if (indexElement == null)
         {
             System.out.println("findACategoryFromAIndexFile: indexElement is null.");
             System.exit(0);
         }//if
+
+        ArrayList<String> foundCategoryNames = new ArrayList<>();
+        CharSequence targetSequence = targetCategory.replace(" ", "").toLowerCase();
 
         NodeList categories = indexElement.getElementsByTagName("category");
         for (int catIndex = 0; catIndex < categories.getLength(); catIndex++)
@@ -66,12 +68,12 @@ public class Search
             if (currentCategory.getNodeType() == Node.ELEMENT_NODE)
             {
                 String categoryName = ((Element)currentCategory).getAttribute("categoryName");
-                if (categoryName.equalsIgnoreCase(targetCategory.replace(" ", "")))
-                    return categoryName;
+                if (categoryName.toLowerCase().replace(" ", "").contains(targetSequence))
+                    foundCategoryNames.add(categoryName);
             }//if
         }//for
 
-        return null;
+        return foundCategoryNames;
     }//findCategory
 //----- Search Methods ---------------------------------------------------------
 }//class

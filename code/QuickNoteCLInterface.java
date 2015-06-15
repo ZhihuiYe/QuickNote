@@ -148,6 +148,9 @@ public class QuickNoteCLInterface
         return null;
     }//userInputHandler
 
+    /**
+     * Get all the necessary information of creating a note form standard input
+     */
     private static void getCreateNoteInputs(String[] inputs)
         throws IOException
     {
@@ -155,7 +158,7 @@ public class QuickNoteCLInterface
         String currentNoteTitle   = null;
         String currentNoteContent = null;
 
-        String similarCategory = null;
+        ArrayList<String> similarCategories = null;
         Boolean answer         = null;
         Boolean finalAnswer    = null;
 
@@ -172,8 +175,8 @@ public class QuickNoteCLInterface
             //or does the user wish to create a new category?
             do
             {
-                similarCategory = Search.findACategoryFromAIndexFile(indexFile.getDocElement(), currentCategory);
-                if (similarCategory == null)
+                similarCategories = Search.findACategoryFromAIndexFile(indexFile.getDocElement(), currentCategory);
+                if (similarCategories.isEmpty())
                     System.out.print(Print.ANSI_RED + "The category "
                                         + Print.ANSI_GREEN + "DOES NOT " + Print.ANSI_RESET
                                         + Print.ANSI_RED
@@ -183,16 +186,41 @@ public class QuickNoteCLInterface
                     System.out.print(Print.ANSI_RED + "The category "
                                         + Print.ANSI_GREEN + "DOES " + Print.ANSI_RESET
                                         + Print.ANSI_RED
-                                        + "exist.\nDo you wish to write into this category?("
-                                        + similarCategory + ")\n" + Print.ANSI_RESET);
+                                        + "exist.\nDo you wish to write into one of the categories?"
+                                        + similarCategories + "\n" + Print.ANSI_RESET);
 
                 //if user wish to change the category
                 answer = getYesOrNoAnswer();
                 if (! answer)
                     currentCategory = getUserInput("New category: ", false);
                 else
-                    if(similarCategory != null)
-                        currentCategory = similarCategory;
+                    if ( ! similarCategories.isEmpty())
+                    {
+                        Boolean success = false;
+                        int selectedCategoryIndex = 0;
+                        do
+                        {
+                            String indexInStr = getUserInput("Please selecte (0 ~ "
+                                                         + similarCategories.size() + "): "
+                                                         + similarCategories
+                                                         , false);
+                            try
+                            {
+                                selectedCategoryIndex = Integer.parseInt(indexInStr);
+                                if (selectedCategoryIndex < 0)
+                                    throw new NumberFormatException();
+                                success = true;
+                            }//try
+                            catch(NumberFormatException e)
+                            {
+                                System.out.println("Please enter a number between 1 ~ "
+                                                   + similarCategories.size());
+                                success = false;
+                            }//catch
+                        }while(! success);
+
+                        currentCategory = similarCategories.get(selectedCategoryIndex);
+                    }//if
             }while( !answer );
         }//if
 

@@ -147,20 +147,21 @@ public class CommandController
     private static void executeFindCategoryCommand(ArrayList<String> userInputs)
     {
         String targetCategory = userInputs.get(0);
-        String searchCategoryResult = Search.findACategoryFromAIndexFile(indexFile.getDocElement(), targetCategory);
-        //if the category exist then read the category file and print out
-        //else acknowledge the user
-        if (searchCategoryResult == null)
+        ArrayList<String> searchCategoryResults = Search.findACategoryFromAIndexFile(indexFile.getDocElement(), targetCategory);
+
+        if (searchCategoryResults.isEmpty())
         {
             System.out.println("Category does not exist");
             System.exit(0);
         }//if
-        else//if the category file exist then read the file
+
+        //if the category exist then read the category file and print out
+        //else acknowledge the user
+        for (String currentCategory : searchCategoryResults)
         {
-            categoryFile = xmlreader.readFile(FileType.CATEGORY, searchCategoryResult);
+            categoryFile = xmlreader.readFile(FileType.CATEGORY, currentCategory);
             Print.printCategory(categoryFile.getDocElement());
-            System.exit(0);
-        }//else
+        }//foreach
     }//executeFindCategoryCommand
 
     private static void executeCreateNoteCommand(ArrayList<String> userInputs)

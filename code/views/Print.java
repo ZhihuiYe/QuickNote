@@ -46,9 +46,9 @@ public class Print
     public static void printIndexCategory(Element givenCategoryElement)
     {
         //Category tag
-        System.out.println(/*ANSI_GREEN + "Printing : " + ANSI_RESET
-                                      + givenCategoryElement.getNodeName()
-                         +*/ "\nCategory:       " + givenCategoryElement.getAttribute("categoryName")
+        System.out.println(  "\n" + ANSI_RED
+                         + "Category:       " + givenCategoryElement.getAttribute("categoryName")
+                         + ANSI_RESET
                          + "\nLastUpdate:     " + givenCategoryElement.getAttribute("lastUpdate")
                          + "\nLatestNote:     " + givenCategoryElement.getAttribute("latestNote") + "\n");
 
@@ -76,9 +76,9 @@ public class Print
      **/
     public static void printCategory(Element categoryElement)
     {
-            System.out.println(ANSI_RED  + "Printing :" + ANSI_RESET + " :"
-                                         + categoryElement.getNodeName()              + "\n"
-                        + "id:         " + categoryElement.getAttribute("id")         + "\n"
+            System.out.println(ANSI_RED  + "\nPrinting :"
+                        + categoryElement.getNodeName() + ANSI_RESET + "\n"
+                        + "id:         " + categoryElement.getAttribute("id")        + "\n"
                         + "lastUpdate: " + categoryElement.getAttribute("lastUpdate") + "\n");
 
             // Extract all the driver element from the document
