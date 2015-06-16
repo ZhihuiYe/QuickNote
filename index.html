@@ -31,8 +31,8 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>
-<a id="welcome-to-quicknote-pages" class="anchor" href="#welcome-to-quicknote-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to QuickNote Pages.</h1>
+        <h2>
+<a id="welcome-to-quicknote-pages" class="anchor" href="#welcome-to-quicknote-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to QuickNote Pages.</h2>
 
 <h3>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
@@ -86,7 +86,6 @@ Show all the available commands with short discription.</p>
 Printing : index
 lastUpdate:   16/06/2015-00:20:47
 
-
 Category:       newCateory
 LastUpdate:     30/05/2015-15:18:12
 LatestNote:     newTitle2
@@ -94,14 +93,12 @@ LatestNote:     newTitle2
     Time:  30/05/2015-15:18:12
     Title: newTitle2
 
-
 Category:       new cate
 LastUpdate:     30/05/2015-16:52:34
 LatestNote:     new title3
 
     Time:  30/05/2015-16:52:34
     Title: new title3
-
 
 Category:       newCat
 LastUpdate:     16/06/2015-00:20:47
@@ -143,8 +140,6 @@ Title:          newTitle2
 Create Time:    30/05/2015-15:18:12
 Content:        content content content
 
-
-
 Printing :category
 id:         new cate
 lastUpdate: 30/05/2015-16:52:34
@@ -176,8 +171,6 @@ Title:          newTitle2
 Create Time:    30/05/2015-15:18:12
 Content:        content content content
 
-
-
 Printing :category
 id:         new cate
 lastUpdate: 30/05/2015-16:52:34
@@ -204,6 +197,36 @@ Create a new note, the note will saved in the selected category.</p>
 <li>If the target category doesnot existed the system will ask you to create a new category.</li>
 <li>If the title is already existed then the system will ask you to enter a new one.</li>
 </ul>
+
+<pre><code>$ qn
+Please selected your command.
+Options are below:
+Commands        : Require Info
+-ShowAll        : &lt;null&gt;
+-FindCategory   : &lt;categoryName&gt;
+-FindNote       : &lt;noteTitle&gt;
+-CreateCategory : &lt;categoryName&gt;
+-CreateNote     : &lt;categoryName(new/existing)&gt; &lt;noteTitle&gt; &lt;noteContent&gt;
+-Help           : &lt;null&gt;
+
+createnote
+Category: newcate
+The category DOES exist.
+Do you wish to write into one of the categories?[newCateory, new cate]
+yes
+Please selecte (0 ~ 2): [newCateory, new cate]0
+Title: newTestTitle
+Content: new test content
+Is 'new test content' correct?(Yes/No)
+yes
+System: 'newCateory' generated/updated
+
+
+Printing :category
+    ...........
+Printing : index
+    ...........
+</code></pre>
 
 <h3>
 <a id="createcategory" class="anchor" href="#createcategory" aria-hidden="true"><span class="octicon octicon-link"></span></a>CreateCategory</h3>
