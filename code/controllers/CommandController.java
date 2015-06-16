@@ -24,12 +24,12 @@ public class CommandController
     //the type of command the program will accept
     public enum Command
     {
-        SHOW_ALL        ("ShowAll        : <null>"),
-        FIND_CATEGORY   ("FindCategory   : <categoryName>"),
-        FIND_NOTE       ("FindNote       : <noteTitle>"),
-        CREATE_CATEGORY ("CreateCategory : <categoryName>"),
-        CREATE_NOTE     ("CreateNote     : <categoryName(new/existing)> <noteTitle> <noteContent>"),
-        HELP            ("Help           : <null>");
+        SHOW_ALL        ("ShowAll/sa        : <null>"),
+        FIND_CATEGORY   ("FindCategory/fc   : <categoryName>"),
+        FIND_NOTE       ("FindNote/fn       : <noteTitle>"),
+        CREATE_CATEGORY ("CreateCategory/cc : <categoryName>"),
+        CREATE_NOTE     ("CreateNote/cn     : <categoryName(new/existing)> <noteTitle> <noteContent>"),
+        HELP            ("Help/h            : <null>");
 
         private final String inString;
         Command(String inString) { this.inString = inString; }
@@ -74,7 +74,7 @@ public class CommandController
                     executeFindNoteCommand(inputs);
                     break;
             case   CREATE_CATEGORY:
-                    executeFindCategoryCommand(inputs);
+                    executeCreateCategoryCommand(inputs);
                     break;
             case   CREATE_NOTE:
                     executeCreateNoteCommand(inputs);
@@ -189,6 +189,7 @@ public class CommandController
 
     private static void executeCreateCategoryCommand(ArrayList<String>  userInputs)
     {
+        System.out.println("comming soon.");
     }//executeCreateCategoryCommand
 
     private static void executeShowallCommand()
@@ -197,6 +198,5 @@ public class CommandController
     }//executeShowallCommand
 
 //----- Ccommands -----------------------------------------------------------------
-
 
 }//class

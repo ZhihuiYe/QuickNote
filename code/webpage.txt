@@ -1,0 +1,186 @@
+### Welcome to QuickNote Pages.
+
+### Installation
+```
+$ cd path_to_your_prefer_location
+$ git clone git@github.com:ZhihuiYe/QuickNote.git
+# Add following line to your ~/.bash_aliases
+    alias qn='path_to_your_prefer_location/QuickNote/code/runQuickNote'
+# Reload .bash_aliases
+$ . .bash_aliases
+```
+
+### Introduction
+Command can run in following formats:
+```
+$ qn [command] [parameter1] [parameter2] .....
+```
+* Commands are non-case sensitive; "ShowAll" and "showall" are the same.
+* Shorthand of commands are available, e.g. "sa" = "showall", run "sa" command to see all.
+* Command can be enter later, just simplely run 'qn' the program will display all the available commands
+* Parameters can be enter later, the program will ask you when is required.
+* Whitespaces are ignored.
+
+
+```
+$ qn
+Please selected your command.
+Options are below:
+Commands        : Require Info
+-ShowAll        : <null>
+-FindCategory   : <categoryName>
+-FindNote       : <noteTitle>
+-CreateCategory : <categoryName>
+-CreateNote     : <categoryName(new/existing)> <noteTitle> <noteContent>
+-Help           : <null>
+```
+
+
+
+### Available commands
+### ShowAll
+Parameters: null
+Show all the available commands with short discription.
+```
+$ qn showall
+
+Printing : index
+lastUpdate:   16/06/2015-00:20:47
+
+Category:       newCateory
+LastUpdate:     30/05/2015-15:18:12
+LatestNote:     newTitle2
+
+	Time:  30/05/2015-15:18:12
+	Title: newTitle2
+
+Category:       new cate
+LastUpdate:     30/05/2015-16:52:34
+LatestNote:     new title3
+
+	Time:  30/05/2015-16:52:34
+	Title: new title3
+
+Category:       newCat
+LastUpdate:     16/06/2015-00:20:47
+LatestNote:     testTitle
+
+	Time:  26/05/2015-01:03:50
+	Title: newTitle
+
+	Time:  27/05/2015-01:37:49
+	Title: newTitle1
+
+	Time:  30/05/2015-16:25:04
+	Title: new title title
+
+	Time:  16/06/2015-00:20:47
+	Title: testTitle
+```
+
+### FindCategory
+Parameters: target category
+Find all the similar catagories which similar to the target catagory;
+e.g. "testCategory", "testCategory1" and "test Category" are match the category "testCat"
+All the contents that contain in the similar categories will be displayed.
+* Whitespaces are ignored
+* Non-case sensitive
+```
+$ qn findcategory newcate
+
+Printing :category
+id:         newCateory
+lastUpdate: 30/05/2015-15:18:12
+
+Title:          newTitle2
+Create Time:    30/05/2015-15:18:12
+Content:        content content content
+
+Printing :category
+id:         new cate
+lastUpdate: 30/05/2015-16:52:34
+
+Title:          new title3
+Create Time:    30/05/2015-16:52:34
+Content:        content
+```
+
+
+### FindNote
+Parameters: target note title
+Find all the notes that the note titles contain the target note title;
+e.g. "title1", "new title2" and "ti tle3" are match the title "TITLE".
+* Whitespaces are ignored
+* Non-case sensitive
+```
+qn findcategory newcate
+
+Printing :category
+id:         newCateory
+lastUpdate: 30/05/2015-15:18:12
+
+Title:          newTitle2
+Create Time:    30/05/2015-15:18:12
+Content:        content content content
+
+Printing :category
+id:         new cate
+lastUpdate: 30/05/2015-16:52:34
+
+Title:          new title3
+Create Time:    30/05/2015-16:52:34
+Content:        content
+
+
+[root@Jarvic-Arch code]# qn findnote newTitle
+Title:          newTitle
+Create Time:    26/05/2015-01:03:50
+Content:        content content
+```
+
+
+### CreateNote
+Parameters: target category, note title, note content
+Create a new note, the note will saved in the selected category.
+* If the target category already existed the system will warn you.
+* If the target category doesnot existed the system will ask you to create a new category.
+* If the title is already existed then the system will ask you to enter a new one.
+```
+$ qn
+Please selected your command.
+Options are below:
+Commands        : Require Info
+-ShowAll        : <null>
+-FindCategory   : <categoryName>
+-FindNote       : <noteTitle>
+-CreateCategory : <categoryName>
+-CreateNote     : <categoryName(new/existing)> <noteTitle> <noteContent>
+-Help           : <null>
+
+createnote
+Category: newcate
+The category DOES exist.
+Do you wish to write into one of the categories?[newCateory, new cate]
+yes
+Please selecte (0 ~ 2): [newCateory, new cate]0
+Title: newTestTitle
+Content: new test content
+Is 'new test content' correct?(Yes/No)
+yes
+System: 'newCateory' generated/updated
+
+
+Printing :category
+    ...........
+Printing : index
+    ...........
+```
+
+### CreateCategory
+Parameters: new category
+Create a new category
+* If the category already existed then the system will ask you to enter a new one.
+
+### Help
+Parameters: null
+Show all the available commands with long discriptions and examples.

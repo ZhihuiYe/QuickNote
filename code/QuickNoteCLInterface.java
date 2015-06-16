@@ -88,8 +88,11 @@ public class QuickNoteCLInterface
         //the case and space of the command will be ignored
         switch (command.toLowerCase().replace(" ", ""))
         {
+            case             "sa":
             case        "showall":
                     return Command.SHOW_ALL;
+
+            case             "fc":
             case   "findcategory":
                     //copy all the parameter form the program parameter
                     for (int i = 1; i < inputs.length; i++)
@@ -103,9 +106,9 @@ public class QuickNoteCLInterface
                         default:
                             break;
                     }//switch
-
                     return Command.FIND_CATEGORY;
 
+            case             "cc":
             case "createcategory":
                     //copy all the parameter form the program parameter
                     for (int i = 1; i < inputs.length; i++)
@@ -119,8 +122,9 @@ public class QuickNoteCLInterface
                         default:
                             break;
                     }//switch
-
                     return Command.CREATE_CATEGORY;
+
+            case             "fn":
             case       "findnote":
                     //copy all the parameter form the program parameter
                     for (int i = 1; i < inputs.length; i++)
@@ -136,11 +140,15 @@ public class QuickNoteCLInterface
                     }//switch
                     return Command.FIND_NOTE;
 
+            case             "cn":
             case     "createnote":
                     getCreateNoteInputs(inputs);
                     return Command.CREATE_NOTE;
+
+            case              "h":
             case           "help":
                     return Command.HELP;
+                    
             default:
                     System.out.println("Cannot identify the command");
                     System.exit(-1);
@@ -184,7 +192,7 @@ public class QuickNoteCLInterface
                                         + currentCategory + ")\n" + Print.ANSI_RESET);
                 else
                     System.out.print(Print.ANSI_RED + "The category "
-                                        + Print.ANSI_GREEN + "DOES " + Print.ANSI_RESET
+                                        + Print.ANSI_GREEN + "ALREADY " + Print.ANSI_RESET
                                         + Print.ANSI_RED
                                         + "exist.\nDo you wish to write into one of the categories?"
                                         + similarCategories + "\n" + Print.ANSI_RESET);
@@ -207,7 +215,8 @@ public class QuickNoteCLInterface
                             try
                             {
                                 selectedCategoryIndex = Integer.parseInt(indexInStr);
-                                if (selectedCategoryIndex < 0)
+                                if (selectedCategoryIndex < 0
+                                    || selectedCategoryIndex > similarCategories.size())
                                     throw new NumberFormatException();
                                 success = true;
                             }//try
