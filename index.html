@@ -56,8 +56,170 @@ $ . .bash_aliases
 <ul>
 <li>Commands are non-case sensitive; "ShowAll" and "showall" are the same.</li>
 <li>Command can be enter later, just simplely run 'qn' the program will display all the available commands</li>
-<li>parameters can be enter later, the program will ask you when is required.</li>
+<li>Parameters can be enter later, the program will ask you when is required.</li>
+<li>Whitespaces are ignored.</li>
 </ul>
+
+<pre><code>$ qn
+Please selected your command.
+Options are below:
+Commands        : Require Info
+-ShowAll        : &lt;null&gt;
+-FindCategory   : &lt;categoryName&gt;
+-FindNote       : &lt;noteTitle&gt;
+-CreateCategory : &lt;categoryName&gt;
+-CreateNote     : &lt;categoryName(new/existing)&gt; &lt;noteTitle&gt; &lt;noteContent&gt;
+-Help           : &lt;null&gt;
+</code></pre>
+
+<h2>
+<a id="available-commands" class="anchor" href="#available-commands" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available commands</h2>
+
+<h3>
+<a id="showall" class="anchor" href="#showall" aria-hidden="true"><span class="octicon octicon-link"></span></a>ShowAll</h3>
+
+<p>Parameters: null
+Show all the available commands with short discription.</p>
+
+<pre><code>$ qn showall
+
+Printing : index
+lastUpdate:   16/06/2015-00:20:47
+
+
+Category:       newCateory
+LastUpdate:     30/05/2015-15:18:12
+LatestNote:     newTitle2
+
+    Time:  30/05/2015-15:18:12
+    Title: newTitle2
+
+
+Category:       new cate
+LastUpdate:     30/05/2015-16:52:34
+LatestNote:     new title3
+
+    Time:  30/05/2015-16:52:34
+    Title: new title3
+
+
+Category:       newCat
+LastUpdate:     16/06/2015-00:20:47
+LatestNote:     testTitle
+
+    Time:  26/05/2015-01:03:50
+    Title: newTitle
+
+    Time:  27/05/2015-01:37:49
+    Title: newTitle1
+
+    Time:  30/05/2015-16:25:04
+    Title: new title title
+
+    Time:  16/06/2015-00:20:47
+    Title: testTitle
+</code></pre>
+
+<h3>
+<a id="findcategory" class="anchor" href="#findcategory" aria-hidden="true"><span class="octicon octicon-link"></span></a>FindCategory</h3>
+
+<p>Parameters: target category
+Find all the similar catagories which similar to the target catagory;
+e.g. "testCategory", "testCategory1" and "test Category" are match the category "testCat"
+All the contents that contain in the similar categories will be displayed.</p>
+
+<ul>
+<li>Whitespaces are ignored</li>
+<li>Non-case sensitive</li>
+</ul>
+
+<pre><code>$ qn findcategory newcate
+
+Printing :category
+id:         newCateory
+lastUpdate: 30/05/2015-15:18:12
+
+Title:          newTitle2
+Create Time:    30/05/2015-15:18:12
+Content:        content content content
+
+
+
+Printing :category
+id:         new cate
+lastUpdate: 30/05/2015-16:52:34
+
+Title:          new title3
+Create Time:    30/05/2015-16:52:34
+Content:        content
+</code></pre>
+
+<h3>
+<a id="findnote" class="anchor" href="#findnote" aria-hidden="true"><span class="octicon octicon-link"></span></a>FindNote</h3>
+
+<p>Parameters: target note title
+Find all the notes that the note titles contain the target note title;
+e.g. "title1", "new title2" and "ti tle3" are match the title "TITLE".</p>
+
+<ul>
+<li>Whitespaces are ignored</li>
+<li>Non-case sensitive</li>
+</ul>
+
+<pre><code>qn findcategory newcate
+
+Printing :category
+id:         newCateory
+lastUpdate: 30/05/2015-15:18:12
+
+Title:          newTitle2
+Create Time:    30/05/2015-15:18:12
+Content:        content content content
+
+
+
+Printing :category
+id:         new cate
+lastUpdate: 30/05/2015-16:52:34
+
+Title:          new title3
+Create Time:    30/05/2015-16:52:34
+Content:        content
+
+
+[root@Jarvic-Arch code]# qn findnote newTitle
+Title:          newTitle
+Create Time:    26/05/2015-01:03:50
+Content:        content content
+</code></pre>
+
+<h3>
+<a id="createnote" class="anchor" href="#createnote" aria-hidden="true"><span class="octicon octicon-link"></span></a>CreateNote</h3>
+
+<p>Parameters: target category, note title, note content
+Create a new note, the note will saved in the selected category.</p>
+
+<ul>
+<li>If the target category already existed the system will warn you.</li>
+<li>If the target category doesnot existed the system will ask you to create a new category.</li>
+<li>If the title is already existed then the system will ask you to enter a new one.</li>
+</ul>
+
+<h3>
+<a id="createcategory" class="anchor" href="#createcategory" aria-hidden="true"><span class="octicon octicon-link"></span></a>CreateCategory</h3>
+
+<p>Parameters: new category
+Create a new category</p>
+
+<ul>
+<li>If the category already existed then the system will ask you to enter a new one.</li>
+</ul>
+
+<h3>
+<a id="help" class="anchor" href="#help" aria-hidden="true"><span class="octicon octicon-link"></span></a>Help</h3>
+
+<p>Parameters: null
+Show all the available commands with long discriptions and examples.</p>
       </section>
     </div>
 
