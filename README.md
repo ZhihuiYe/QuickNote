@@ -1,5 +1,5 @@
 # QuickNote
-QuickNote is a program that helps user to organise notes by classifying the notes in different category and store them in xml files. Currently, it only support command line interface. The program is written in Java.
+QuickNote is a Java program that helps users to organise notes by classifying the notes in different categories and store them in XML files. Currently, it only supported command-line interface.
 
 Design: contains all the design before start writing the program. It includes class diagram, communication diagrams, flow charts, sequence diagrams, UI design and process plan. Furthermore, it also contains XML file templates; Index file template, custom setting template and category file template.
 
